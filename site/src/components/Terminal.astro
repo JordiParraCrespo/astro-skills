@@ -1,0 +1,57 @@
+---
+const lines: { t: string; c?: string }[] = [
+  { t: '> /astro audit', c: 'text-[var(--color-term-fg)] font-semibold' },
+  { t: '' },
+  { t: '● Scanning project…', c: 'text-[var(--color-term-muted)]' },
+  { t: '  astro ^5.14 · output: static · 38 pages · 6 islands', c: 'text-[var(--color-term-muted)]' },
+  { t: '● Spawning 5 agents in parallel', c: 'text-[var(--color-term-muted)]' },
+  { t: '  ✓ astro-architect      ✓ astro-performance', c: 'text-[var(--color-success)]' },
+  { t: '  ✓ astro-seo            ✓ astro-accessibility', c: 'text-[var(--color-success)]' },
+  { t: '  ✓ astro-security', c: 'text-[var(--color-success)]' },
+  { t: '' },
+];
+const scores = [
+  ['architecture', 86],
+  ['performance', 61],
+  ['seo', 70],
+  ['accessibility', 78],
+  ['security', 94],
+] as const;
+---
+
+<div
+  class="overflow-hidden rounded-xl border border-[var(--color-zinc-800)] bg-[var(--color-term-bg)] shadow-[0_40px_80px_-30px_rgb(0_0_0/0.8)]"
+  role="img"
+  aria-label="Terminal showing /astro audit: the scanner detects the project, five agents run in parallel, and the project scores 72 out of 100 with a prioritized list of fixes."
+>
+  <div class="flex items-center gap-2 border-b border-[var(--color-zinc-800)] px-4 py-3">
+    <span class="size-3 rounded-full bg-[var(--color-zinc-700)]"></span>
+    <span class="size-3 rounded-full bg-[var(--color-zinc-700)]"></span>
+    <span class="size-3 rounded-full bg-[var(--color-zinc-700)]"></span>
+    <span class="ml-3 font-mono text-xs text-[var(--color-term-muted)]">claude — my-astro-site</span>
+  </div>
+  <div class="overflow-x-auto p-5 font-mono text-[13px] leading-6" aria-hidden="true">
+    {lines.map((l) => <div class:list={['whitespace-pre', l.c]}>{l.t || ' '}</div>)}
+    <div class="whitespace-pre text-[var(--color-term-fg)]">
+      Score <span class="font-semibold text-[var(--color-warning)]">72</span>/100
+    </div>
+    {
+      scores.map(([name, value]) => (
+        <div class="flex items-center gap-3 whitespace-pre text-[var(--color-term-muted)]">
+          <span class="w-28">{name}</span>
+          <span class="h-1.5 w-32 overflow-hidden rounded-full bg-[var(--color-zinc-800)]">
+            <span
+              class="block h-full rounded-full bg-[linear-gradient(90deg,var(--color-accent),var(--color-accent-2))]"
+              style={`width:${value}%`}
+            />
+          </span>
+          <span class="text-[var(--color-term-fg)] tabular-nums">{value}</span>
+        </div>
+      ))
+    }
+    <div class="whitespace-pre"> </div>
+    <div class="whitespace-pre text-[var(--color-danger)]">✗ critical  hero.jpg lazy-loaded → LCP 4.1s</div>
+    <div class="whitespace-pre text-[var(--color-warning)]">! high      3× client:load below the fold</div>
+    <div class="whitespace-pre text-[var(--color-term-muted)]">→ wrote ASTRO-AUDIT.md (14 findings)</div>
+  </div>
+</div>

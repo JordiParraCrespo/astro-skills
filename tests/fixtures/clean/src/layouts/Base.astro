@@ -1,0 +1,4 @@
+---
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<html lang="en"><head><link rel="canonical" href={canonical} /></head><body><slot /></body></html>

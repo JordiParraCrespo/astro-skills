@@ -1,0 +1,65 @@
+---
+import Logo from './Logo.astro';
+import { GITHUB_URL, url } from '../lib/site';
+
+const columns = [
+  {
+    title: 'Product',
+    links: [
+      { href: url('/skills'), label: 'All skills' },
+      { href: url('/#how-it-works'), label: 'How it works' },
+      { href: url('/#install'), label: 'Install' },
+    ],
+  },
+  {
+    title: 'Resources',
+    links: [
+      { href: GITHUB_URL, label: 'GitHub' },
+      { href: `${GITHUB_URL}/blob/main/CHANGELOG.md`, label: 'Changelog' },
+      { href: url('/llms.txt'), label: 'llms.txt' },
+    ],
+  },
+  {
+    title: 'Astro',
+    links: [
+      { href: 'https://docs.astro.build', label: 'Astro docs' },
+      { href: 'https://docs.claude.com/en/docs/claude-code/skills', label: 'Claude Code skills' },
+    ],
+  },
+];
+---
+
+<footer class="border-t border-[var(--color-border)]">
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-[1.5fr_repeat(3,1fr)]">
+    <div>
+      <a href={url('/')} class="flex items-center gap-2.5 font-semibold">
+        <Logo class="size-7" />
+        astro-skills
+      </a>
+      <p class="mt-4 max-w-xs text-sm text-[var(--color-fg-muted)]">
+        Open-source Claude Code skills for building fast, accessible, well-ranked Astro sites. MIT licensed.
+      </p>
+    </div>
+    {
+      columns.map((c) => (
+        <div>
+          <h2 class="font-mono text-xs tracking-widest text-[var(--color-fg-muted)] uppercase">{c.title}</h2>
+          <ul class="mt-4 space-y-2.5 text-sm">
+            {c.links.map((l) => (
+              <li>
+                <a href={l.href} class="text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-fg)]">
+                  {l.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+  <div class="border-t border-[var(--color-border)]">
+    <p class="mx-auto max-w-6xl px-4 py-6 text-xs text-[var(--color-fg-muted)] sm:px-6">
+      Not affiliated with Astro Technology Company or Anthropic. Built with Astro.
+    </p>
+  </div>
+</footer>

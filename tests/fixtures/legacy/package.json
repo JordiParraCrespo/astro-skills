@@ -1,0 +1,1 @@
+{ "name": "legacy", "dependencies": { "astro": "^4.16.0", "react": "^18.0.0", "vue": "^3.0.0" } }

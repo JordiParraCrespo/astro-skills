@@ -1,0 +1,447 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SkillCard from '../components/SkillCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import CopyCommand from '../components/CopyCommand.astro';
+import Terminal from '../components/Terminal.astro';
+import { RULES } from '../../../skills/astro/scripts/astro-scan.mjs';
+import { CATEGORIES } from '../content.config';
+import { CATEGORY_LABELS, GITHUB_URL, MANUAL_INSTALL, PLUGIN_INSTALL, SITE_DESCRIPTION, url } from '../lib/site';
+
+const skills = (await getCollection('skills')).sort((a, b) => a.data.metadata.order - b.data.metadata.order);
+const agents = await getCollection('agents');
+const ruleCount = Object.keys(RULES).length;
+
+const stats = [
+  { value: skills.length, label: 'Skills' },
+  { value: agents.length, label: 'Audit agents' },
+  { value: ruleCount, label: 'Scanner rules' },
+  { value: 0, label: 'Runtime deps' },
+];
+
+const steps = [
+  {
+    title: 'Install once',
+    body: 'Add the plugin from the marketplace, or clone and run the installer. Skills land in Claude Code, not in your project.',
+    code: '/plugin install astro-skills@astro-skills',
+  },
+  {
+    title: 'Ask in plain words',
+    body: 'Say "why is my blog slow?" or run a command. Claude loads only the skill that matches, so the context stays lean.',
+    code: '/astro perf src/pages/blog',
+  },
+  {
+    title: 'Detect, then decide',
+    body: 'A zero-dependency scanner reads your config, version and source first. Every recommendation is anchored on facts, not guesses.',
+    code: 'node astro-scan.mjs . --json',
+  },
+  {
+    title: 'Get a plan and a diff',
+    body: 'Findings come with file:line, a minimal fix in your code style and a way to verify it worked. Audits fan out to 5 agents in parallel.',
+    code: '/astro audit',
+  },
+];
+
+const workflows = [
+  {
+    title: 'Starting fresh',
+    body: 'Scaffold with production defaults, then set up content and styling the right way from day one.',
+    skills: ['astro-init', 'astro-content', 'astro-styling'],
+  },
+  {
+    title: 'Something is off',
+    body: 'Slow LCP, layout shift, too much JavaScript or a failing Lighthouse run. Go straight to the specialist.',
+    skills: ['astro-perf', 'astro-images', 'astro-islands'],
+  },
+  {
+    title: 'Before a launch',
+    body: 'Run the full audit, then close the SEO and accessibility gaps and pick the right deploy target.',
+    skills: ['astro-audit', 'astro-seo', 'astro-deploy'],
+  },
+];
+
+const comparison = [
+  ['Knows which Astro major you run', 'Often suggests removed APIs', 'Reads package.json first, verifies APIs'],
+  ['Hydration choices', 'client:load everywhere', 'Decision table per island, JS budget'],
+  ['Images', 'Raw <img> tags', 'astro:assets, sizes, LCP priority'],
+  ['Content', 'Legacy collections', 'Content layer loaders + Zod schemas'],
+  ['Findings', 'Vague advice', 'file:line, fix, verification step'],
+  ['Audits', 'One long pass', '5 agents in parallel, scored 0–100'],
+];
+
+const faqs = [
+  {
+    q: 'What is a Claude Code skill?',
+    a: 'A skill is a folder with a SKILL.md file of focused instructions. Claude Code reads only the short description up front and loads the full skill when your request matches, so you get expert, repeatable workflows without bloating every conversation.',
+  },
+  {
+    q: 'Which Astro versions are supported?',
+    a: 'Astro 5 and newer, including the latest major. Every skill starts by reading the installed version and checks APIs against the official docs before recommending them, so it will not push removed APIs like Astro.glob or output: "hybrid".',
+  },
+  {
+    q: 'Does it add anything to my project?',
+    a: 'No. The skills live in Claude Code. The scanner is a single Node script with zero dependencies that only reads files. Changes to your project are proposed as minimal diffs you review.',
+  },
+  {
+    q: 'Do I need React, Vue or another UI framework?',
+    a: 'No. The skills are framework-agnostic and default to zero JavaScript: native HTML primitives, Astro components and small scripts first. If you already use a UI framework, the islands skill helps you hydrate it responsibly.',
+  },
+  {
+    q: 'How is the audit scored?',
+    a: `The scanner checks ${ruleCount} rules across architecture, performance, SEO, accessibility and security. Each rule has a severity weight (critical 15, high 8, medium 3, low 1), capped so one noisy rule cannot sink the score. The agents then add findings the scanner cannot see.`,
+  },
+  {
+    q: 'Can I use it with other agents?',
+    a: 'Yes. Skills are plain Markdown, so any agent that supports the SKILL.md format can load them. The installer also works without the plugin marketplace.',
+  },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Astro Skills',
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'macOS, Linux, Windows',
+  description: SITE_DESCRIPTION,
+  url: new URL(url('/'), Astro.site).href,
+  codeRepository: GITHUB_URL,
+  license: 'https://opensource.org/licenses/MIT',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+};
+---
+
+<BaseLayout jsonLd={jsonLd}>
+  <!-- Hero -->
+  <section class="relative overflow-hidden border-b border-[var(--color-border)]">
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_at_top,black_20%,transparent_70%)] bg-[size:48px_48px] opacity-50"
+    >
+    </div>
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute -top-40 left-1/2 h-[480px] w-[900px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,color-mix(in_oklab,var(--color-accent)_30%,transparent),color-mix(in_oklab,var(--color-accent-2)_18%,transparent),transparent)] blur-3xl"
+    >
+    </div>
+    <div class="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 [&>*]:min-w-0 px-4 pt-16 pb-20 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:pt-24">
+      <div>
+        <p
+          class="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1 font-mono text-xs text-[var(--color-fg-muted)]"
+        >
+          <span class="size-1.5 rounded-full bg-[var(--color-success)]"></span>
+          Claude Code plugin · Astro 5+ · MIT
+        </p>
+        <h1 class="mt-6 text-4xl font-semibold tracking-tight text-balance sm:text-6xl">
+          {skills.length} Astro skills.
+          <span
+            class="block bg-[linear-gradient(90deg,var(--color-accent),var(--color-accent-2))] bg-clip-text text-transparent"
+            >One install.</span
+          >
+        </h1>
+        <p class="mt-6 max-w-xl text-lg leading-8 text-[var(--color-fg-muted)] text-pretty">
+          Turn Claude Code into a senior Astro engineer. Audits, islands, content collections, i18n, SEO, images,
+          performance, accessibility and upgrades, each a focused skill that reads your project before it touches it.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a
+            href="#install"
+            class="inline-flex h-11 items-center rounded-lg bg-[var(--color-primary)] px-5 text-sm font-medium text-[var(--color-primary-fg)] transition-opacity hover:opacity-90"
+            >Install the plugin</a
+          >
+          <a
+            href={url('/skills')}
+            class="inline-flex h-11 items-center rounded-lg border border-[var(--color-border-strong)] px-5 text-sm font-medium transition-colors hover:bg-[var(--color-surface-2)]"
+            >Browse all skills →</a
+          >
+        </div>
+        <dl class="mt-12 grid max-w-lg grid-cols-4 gap-4 border-t border-[var(--color-border)] pt-6">
+          {
+            stats.map((s) => (
+              <div>
+                <dt class="font-mono text-[11px] tracking-wider text-[var(--color-fg-muted)] uppercase">{s.label}</dt>
+                <dd class="mt-1 text-2xl font-semibold tabular-nums">{s.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+      <Terminal />
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="mx-auto max-w-6xl px-4 py-24 sm:px-6" aria-labelledby="how-it-works">
+    <SectionHeading eyebrow="How it works" title="From question to verified fix in four steps" id="how-it-works">
+      Skills are small, focused playbooks. Claude picks the right one, grounds it in your real project, and hands back
+      changes you can check.
+    </SectionHeading>
+    <ol class="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      {
+        steps.map((s, i) => (
+          <li class="flex flex-col rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+            <span class="grid size-8 place-items-center rounded-full border border-[var(--color-border-strong)] font-mono text-sm">
+              {i + 1}
+            </span>
+            <h3 class="mt-5 font-semibold">{s.title}</h3>
+            <p class="mt-2 flex-1 text-sm leading-6 text-[var(--color-fg-muted)]">{s.body}</p>
+            <code class="mt-5 block truncate rounded-md border border-[var(--color-border)] bg-[var(--color-term-bg)] px-3 py-2 font-mono text-xs text-[var(--color-term-fg)]">
+              {s.code}
+            </code>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <!-- Skills -->
+  <section class="border-y border-[var(--color-border)] bg-[var(--color-surface)]" aria-labelledby="skills">
+    <div class="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+      <SectionHeading eyebrow="The skills" title="A specialist for every part of an Astro site" id="skills">
+        Every skill ships a workflow, copy-paste patterns, a checklist and the common mistakes to avoid. Invoke one
+        directly or let <code class="font-mono text-[var(--color-fg)]">/astro</code> route for you.
+      </SectionHeading>
+      {
+        CATEGORIES.map((cat) => {
+          const group = skills.filter((s) => s.data.metadata.category === cat);
+          if (!group.length) return null;
+          return (
+            <div class="mt-14">
+              <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b border-[var(--color-border)] pb-3">
+                <h3 class="font-mono text-sm tracking-widest uppercase">{CATEGORY_LABELS[cat]?.label}</h3>
+                <p class="text-sm text-[var(--color-fg-muted)]">{CATEGORY_LABELS[cat]?.blurb}</p>
+              </div>
+              <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {group.map((skill) => (
+                  <SkillCard skill={skill} />
+                ))}
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </section>
+
+  <!-- Workflows -->
+  <section class="mx-auto max-w-6xl px-4 py-24 sm:px-6" aria-labelledby="workflows">
+    <SectionHeading eyebrow="Choose a workflow" title="Not sure where to start?" id="workflows">
+      Pick the situation that sounds like yours. Each path chains three skills in the order that pays off fastest.
+    </SectionHeading>
+    <div class="mt-12 grid gap-4 md:grid-cols-3">
+      {
+        workflows.map((w) => (
+          <div class="rounded-xl border border-[var(--color-border)] p-6">
+            <h3 class="font-semibold">{w.title}</h3>
+            <p class="mt-2 text-sm leading-6 text-[var(--color-fg-muted)]">{w.body}</p>
+            <ol class="mt-5 space-y-2">
+              {w.skills.map((name, i) => (
+                <li>
+                  <a
+                    href={url(`/skills/${name}`)}
+                    class="flex items-center gap-3 rounded-md border border-[var(--color-border)] px-3 py-2 font-mono text-sm transition-colors hover:bg-[var(--color-surface-2)]"
+                  >
+                    <span class="text-[var(--color-fg-muted)]">{i + 1}.</span>
+                    {name}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Sample output -->
+  <section class="border-y border-[var(--color-border)] bg-[var(--color-surface)]" aria-labelledby="sample">
+    <div class="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[1fr_1.2fr] [&>*]:min-w-0">
+      <SectionHeading eyebrow="Sample output" title="Scores you can defend, fixes you can verify" id="sample">
+        <p>
+          <code class="font-mono text-[var(--color-fg)]">/astro audit</code> writes an
+          <code class="font-mono text-[var(--color-fg)]">ASTRO-AUDIT.md</code> with an overall score, a score per category
+          and a priority matrix. Every finding says how you would know the fix failed.
+        </p>
+        <ul class="mt-6 space-y-3 text-sm">
+          <li class="flex gap-3">
+            <span class="text-[var(--color-success)]">✓</span> Deterministic scanner facts, then agent judgement
+          </li>
+          <li class="flex gap-3">
+            <span class="text-[var(--color-success)]">✓</span> file:line for every finding
+          </li>
+          <li class="flex gap-3">
+            <span class="text-[var(--color-success)]">✓</span> Effort and impact to sort quick wins from projects
+          </li>
+        </ul>
+      </SectionHeading>
+      <div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] p-6">
+        <div class="flex items-baseline justify-between">
+          <p class="font-mono text-xs tracking-widest text-[var(--color-fg-muted)] uppercase">ASTRO-AUDIT.md</p>
+          <p class="font-mono text-xs text-[var(--color-fg-muted)]">astro ^5.14 · static</p>
+        </div>
+        <div class="mt-5 grid grid-cols-3 gap-3 sm:grid-cols-6">
+          {
+            [
+              ['Overall', 72],
+              ['Arch', 86],
+              ['Perf', 61],
+              ['SEO', 70],
+              ['A11y', 78],
+              ['Security', 94],
+            ].map(([label, value]) => (
+              <div class="rounded-lg border border-[var(--color-border)] p-3 text-center">
+                <p class="text-2xl font-semibold tabular-nums">{value}</p>
+                <p class="mt-1 font-mono text-[10px] tracking-wider text-[var(--color-fg-muted)] uppercase">{label}</p>
+              </div>
+            ))
+          }
+        </div>
+        <div class="mt-6 overflow-x-auto">
+          <table class="w-full min-w-[480px] text-left text-sm">
+            <thead class="font-mono text-[11px] tracking-wider text-[var(--color-fg-muted)] uppercase">
+              <tr class="border-b border-[var(--color-border)]">
+                <th class="py-2 pr-3 font-normal">Priority</th>
+                <th class="py-2 pr-3 font-normal">Finding</th>
+                <th class="py-2 pr-3 font-normal">Effort</th>
+                <th class="py-2 font-normal">Impact</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                [
+                  ['Critical', 'Hero image lazy-loaded (LCP 4.1s)', 'S', 'L', 'var(--color-danger)'],
+                  ['High', '3 islands use client:load below the fold', 'S', 'M', 'var(--color-warning)'],
+                  ['High', 'No canonical or hreflang on /es/ routes', 'M', 'L', 'var(--color-warning)'],
+                  ['Quick win', 'Add robots.txt endpoint with sitemap', 'S', 'S', 'var(--color-success)'],
+                ].map(([p, f, e, i, color]) => (
+                  <tr class="border-b border-[var(--color-border)] last:border-0">
+                    <td class="py-2.5 pr-3">
+                      <span class="inline-flex items-center gap-1.5 font-mono text-xs">
+                        <span class="size-1.5 rounded-full" style={`background:${color}`} />
+                        {p}
+                      </span>
+                    </td>
+                    <td class="py-2.5 pr-3 text-[var(--color-fg-muted)]">{f}</td>
+                    <td class="py-2.5 pr-3 font-mono">{e}</td>
+                    <td class="py-2.5 font-mono">{i}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison -->
+  <section class="mx-auto max-w-6xl px-4 py-24 sm:px-6" aria-labelledby="compare">
+    <SectionHeading eyebrow="Why skills" title="Generic assistant vs. Astro skills" id="compare">
+      A general coding assistant knows a lot of Astro from a lot of versions. Skills make it know yours.
+    </SectionHeading>
+    <div class="mt-12 overflow-x-auto rounded-xl border border-[var(--color-border)]">
+      <table class="w-full min-w-[640px] text-left text-sm">
+        <thead class="bg-[var(--color-surface)]">
+          <tr class="border-b border-[var(--color-border)]">
+            <th scope="col" class="px-5 py-3 font-medium text-[var(--color-fg-muted)]"></th>
+            <th scope="col" class="px-5 py-3 font-medium text-[var(--color-fg-muted)]">Without skills</th>
+            <th scope="col" class="px-5 py-3 font-medium">With astro-skills</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            comparison.map(([topic, before, after]) => (
+              <tr class="border-b border-[var(--color-border)] last:border-0">
+                <th scope="row" class="px-5 py-3.5 font-medium">
+                  {topic}
+                </th>
+                <td class="px-5 py-3.5 text-[var(--color-fg-muted)]">{before}</td>
+                <td class="px-5 py-3.5">
+                  <span class="mr-2 text-[var(--color-success)]">✓</span>
+                  {after}
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Install -->
+  <section class="border-y border-[var(--color-border)] bg-[var(--color-surface)]" aria-labelledby="install">
+    <div class="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+      <SectionHeading eyebrow="Install" title="Ready in under a minute" id="install">
+        Requires Claude Code and Node 18+ for the scanner. Nothing is added to your Astro project.
+      </SectionHeading>
+      <div class="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-2 [&>*]:min-w-0">
+        <div>
+          <h3 class="mb-3 font-semibold">Plugin marketplace <span class="text-sm font-normal text-[var(--color-fg-muted)]">(recommended)</span></h3>
+          <CopyCommand lines={PLUGIN_INSTALL} label="Claude Code" />
+        </div>
+        <div>
+          <h3 class="mb-3 font-semibold">Manual install <span class="text-sm font-normal text-[var(--color-fg-muted)]">(macOS, Linux)</span></h3>
+          <CopyCommand lines={MANUAL_INSTALL} label="bash" />
+        </div>
+      </div>
+      <div class="mt-6">
+        <h3 class="mb-3 font-semibold">Then, inside any Astro project</h3>
+        <CopyCommand lines={['claude', '/astro audit']} label="Your project" />
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="mx-auto max-w-3xl px-4 py-24 sm:px-6" aria-labelledby="faq">
+    <SectionHeading eyebrow="FAQ" title="Questions, answered" id="faq" />
+    <div class="mt-10 divide-y divide-[var(--color-border)] border-y border-[var(--color-border)]">
+      {
+        faqs.map((f) => (
+          <details name="faq" class="group py-5">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-6 font-medium [&::-webkit-details-marker]:hidden">
+              {f.q}
+              <span
+                aria-hidden="true"
+                class="font-mono text-[var(--color-fg-muted)] transition-transform group-open:rotate-45"
+              >
+                +
+              </span>
+            </summary>
+            <p class="mt-3 leading-7 text-[var(--color-fg-muted)]">{f.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="mx-auto max-w-6xl px-4 pb-24 sm:px-6">
+    <div
+      class="relative overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-14 text-center"
+    >
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-x-0 -bottom-32 mx-auto h-64 max-w-2xl rounded-full bg-[radial-gradient(closest-side,color-mix(in_oklab,var(--color-accent)_25%,transparent),transparent)] blur-2xl"
+      >
+      </div>
+      <h2 class="relative text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+        Build Astro sites like you have a specialist on call
+      </h2>
+      <p class="relative mx-auto mt-4 max-w-xl text-[var(--color-fg-muted)]">
+        Open source, MIT licensed, and made of plain Markdown you can read, fork and extend.
+      </p>
+      <div class="relative mt-8 flex flex-wrap justify-center gap-3">
+        <a
+          href="#install"
+          class="inline-flex h-11 items-center rounded-lg bg-[var(--color-primary)] px-5 text-sm font-medium text-[var(--color-primary-fg)] transition-opacity hover:opacity-90"
+          >Install now</a
+        >
+        <a
+          href={GITHUB_URL}
+          class="inline-flex h-11 items-center rounded-lg border border-[var(--color-border-strong)] px-5 text-sm font-medium transition-colors hover:bg-[var(--color-surface-2)]"
+          >Star on GitHub</a
+        >
+      </div>
+    </div>
+  </section>
+</BaseLayout>

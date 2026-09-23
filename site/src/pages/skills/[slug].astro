@@ -1,0 +1,128 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CopyCommand from '../../components/CopyCommand.astro';
+import { CATEGORY_LABELS, GITHUB_URL, summaryOf, triggersOf, url } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const skills = (await getCollection('skills')).sort((a, b) => a.data.metadata.order - b.data.metadata.order);
+  return skills.map((skill, i) => ({
+    params: { slug: skill.id },
+    props: { skill, prev: skills[i - 1], next: skills[i + 1] },
+  }));
+}
+
+interface Props {
+  skill: CollectionEntry<'skills'>;
+  prev?: CollectionEntry<'skills'>;
+  next?: CollectionEntry<'skills'>;
+}
+
+const { skill, prev, next } = Astro.props;
+const { Content, headings } = await render(skill);
+const { metadata, description } = skill.data;
+const triggers = triggersOf(description);
+const toc = headings.filter((h) => h.depth === 2);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: `${skill.data.name}: ${metadata.tagline}`,
+  description: summaryOf(description),
+  url: new URL(url(`/skills/${skill.id}`), Astro.site).href,
+  isPartOf: { '@type': 'SoftwareApplication', name: 'Astro Skills', codeRepository: GITHUB_URL },
+};
+---
+
+<BaseLayout title={skill.data.name} description={metadata.tagline} jsonLd={jsonLd}>
+  <div class="mx-auto max-w-6xl px-4 pt-10 pb-24 sm:px-6">
+    <nav aria-label="Breadcrumb" class="font-mono text-xs text-[var(--color-fg-muted)]">
+      <a href={url('/')} class="hover:text-[var(--color-fg)]">home</a>
+      <span class="mx-2">/</span>
+      <a href={url('/skills')} class="hover:text-[var(--color-fg)]">skills</a>
+      <span class="mx-2">/</span>
+      <span class="text-[var(--color-fg)]" aria-current="page">{skill.id}</span>
+    </nav>
+
+    <header class="mt-8 border-b border-[var(--color-border)] pb-10">
+      <div class="flex flex-wrap items-center gap-3 font-mono text-xs text-[var(--color-fg-muted)]">
+        <span>{String(metadata.order).padStart(2, '0')}</span>
+        <a href={url(`/skills#${metadata.category}`)} class="rounded-full border border-[var(--color-border)] px-2 py-0.5 hover:text-[var(--color-fg)]">
+          {CATEGORY_LABELS[metadata.category]?.label}
+        </a>
+        <span>v{metadata.version}</span>
+      </div>
+      <h1 class="mt-4 font-mono text-4xl font-semibold tracking-tight sm:text-5xl">{skill.data.name}</h1>
+      <p class="mt-4 max-w-3xl text-lg leading-8 text-[var(--color-fg-muted)] text-pretty">{metadata.tagline}</p>
+      <div class="mt-8 max-w-xl">
+        <CopyCommand lines={[metadata.command]} label="Invoke in Claude Code" />
+      </div>
+    </header>
+
+    <div class="mt-10 grid gap-12 lg:grid-cols-[1fr_260px]">
+      <article class="prose min-w-0">
+        <Content />
+      </article>
+      <aside class="order-first space-y-8 lg:order-none">
+        <div class="lg:sticky lg:top-24 space-y-8">
+          {
+            toc.length > 0 && (
+              <nav aria-label="On this page" class="hidden lg:block">
+                <p class="font-mono text-xs tracking-widest text-[var(--color-fg-muted)] uppercase">On this page</p>
+                <ul class="mt-3 space-y-2 text-sm">
+                  {toc.map((h) => (
+                    <li>
+                      <a href={`#${h.slug}`} class="text-[var(--color-fg-muted)] hover:text-[var(--color-fg)]">
+                        {h.text}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            )
+          }
+          {
+            triggers.length > 0 && (
+              <div>
+                <p class="font-mono text-xs tracking-widest text-[var(--color-fg-muted)] uppercase">Triggers on</p>
+                <ul class="mt-3 flex flex-wrap gap-1.5">
+                  {triggers.map((t) => (
+                    <li class="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-0.5 font-mono text-[11px] text-[var(--color-fg-muted)]">
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          }
+          <a
+            href={`${GITHUB_URL}/blob/main/skills/${skill.id}/SKILL.md`}
+            class="inline-flex font-mono text-xs text-[var(--color-fg-muted)] underline underline-offset-4 hover:text-[var(--color-fg)]"
+            >View SKILL.md source →</a
+          >
+        </div>
+      </aside>
+    </div>
+
+    <nav class="mt-20 grid gap-4 border-t border-[var(--color-border)] pt-8 sm:grid-cols-2" aria-label="Skill pagination">
+      {
+        prev ? (
+          <a href={url(`/skills/${prev.id}`)} class="rounded-xl border border-[var(--color-border)] p-5 transition-colors hover:bg-[var(--color-surface-2)]">
+            <span class="font-mono text-xs text-[var(--color-fg-muted)]">← Previous</span>
+            <span class="mt-1 block font-mono font-semibold">{prev.data.name}</span>
+          </a>
+        ) : (
+          <span />
+        )
+      }
+      {
+        next && (
+          <a href={url(`/skills/${next.id}`)} class="rounded-xl border border-[var(--color-border)] p-5 text-right transition-colors hover:bg-[var(--color-surface-2)]">
+            <span class="font-mono text-xs text-[var(--color-fg-muted)]">Next →</span>
+            <span class="mt-1 block font-mono font-semibold">{next.data.name}</span>
+          </a>
+        )
+      }
+    </nav>
+  </div>
+</BaseLayout>

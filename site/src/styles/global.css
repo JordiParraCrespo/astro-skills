@@ -1,0 +1,191 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-zinc-50: #fafafa;
+  --color-zinc-100: #f4f4f5;
+  --color-zinc-200: #e4e4e7;
+  --color-zinc-300: #d4d4d8;
+  --color-zinc-400: #a1a1aa;
+  --color-zinc-500: #71717a;
+  --color-zinc-600: #52525b;
+  --color-zinc-700: #3f3f46;
+  --color-zinc-800: #27272a;
+  --color-zinc-900: #18181b;
+  --color-zinc-950: #09090b;
+
+  --color-bg: var(--color-zinc-950);
+  --color-surface: #0f0f12;
+  --color-surface-2: var(--color-zinc-900);
+  --color-fg: var(--color-zinc-50);
+  --color-fg-muted: var(--color-zinc-400);
+  --color-border: var(--color-zinc-800);
+  --color-border-strong: var(--color-zinc-700);
+  --color-primary: var(--color-zinc-50);
+  --color-primary-fg: var(--color-zinc-950);
+  --color-ring: var(--color-zinc-300);
+
+  /* The single accent: Astro's launch-orange to purple. Decoration only. */
+  --color-accent: #ff5d01;
+  --color-accent-2: #a855f7;
+  --color-accent-fg: #ffb088;
+
+  --color-success: oklch(76% 0.15 150);
+  --color-warning: oklch(80% 0.15 80);
+  --color-danger: oklch(70% 0.19 28);
+
+  --color-term-bg: #0b0b0e;
+  --color-term-fg: var(--color-zinc-200);
+  --color-term-muted: var(--color-zinc-500);
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, Consolas, monospace;
+}
+
+@layer base {
+  :root.light {
+    --color-bg: #ffffff;
+    --color-surface: var(--color-zinc-50);
+    --color-surface-2: var(--color-zinc-100);
+    --color-fg: var(--color-zinc-950);
+    --color-fg-muted: var(--color-zinc-600);
+    --color-border: var(--color-zinc-200);
+    --color-border-strong: var(--color-zinc-300);
+    --color-primary: var(--color-zinc-950);
+    --color-primary-fg: var(--color-zinc-50);
+    --color-ring: var(--color-zinc-600);
+    --color-accent-fg: #c2410c;
+  }
+
+  html {
+    color-scheme: dark;
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  html.light {
+    color-scheme: light;
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--color-accent) 40%, transparent);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* tailwind-exception: rendered SKILL.md markdown has no classes to hang utilities on. */
+.prose {
+  color: var(--color-fg-muted);
+  line-height: 1.75;
+  font-size: 1rem;
+}
+.prose > * + * {
+  margin-top: 1.1em;
+}
+.prose h1 {
+  display: none;
+}
+.prose h2 {
+  color: var(--color-fg);
+  font-size: 1.5rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  margin-top: 2.5em;
+  padding-top: 1.25em;
+  border-top: 1px solid var(--color-border);
+}
+.prose h3 {
+  color: var(--color-fg);
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-top: 2em;
+}
+.prose strong {
+  color: var(--color-fg);
+}
+.prose a {
+  color: var(--color-accent-fg);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose ul,
+.prose ol {
+  padding-left: 1.25em;
+}
+.prose ul {
+  list-style: disc;
+}
+.prose ol {
+  list-style: decimal;
+}
+.prose li + li {
+  margin-top: 0.35em;
+}
+.prose li::marker {
+  color: var(--color-zinc-500);
+}
+.prose ul.contains-task-list {
+  list-style: none;
+  padding-left: 0;
+}
+.prose input[type='checkbox'] {
+  margin-right: 0.5em;
+  accent-color: var(--color-accent);
+}
+.prose :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  color: var(--color-fg);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+  overflow-wrap: anywhere;
+}
+.prose pre {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+}
+.prose blockquote {
+  border-left: 3px solid var(--color-accent);
+  padding-left: 1rem;
+  color: var(--color-fg-muted);
+}
+.prose table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.prose th,
+.prose td {
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.6em 0.9em 0.6em 0;
+  text-align: left;
+  vertical-align: top;
+}
+.prose th {
+  color: var(--color-fg);
+  font-weight: 600;
+}

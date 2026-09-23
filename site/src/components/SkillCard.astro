@@ -1,0 +1,27 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { url } from '../lib/site';
+
+interface Props {
+  skill: CollectionEntry<'skills'>;
+}
+const { skill } = Astro.props;
+const { metadata } = skill.data;
+---
+
+<a
+  href={url(`/skills/${skill.id}`)}
+  class="group relative flex h-full flex-col rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 transition-colors hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface-2)]"
+>
+  <div class="flex items-center justify-between font-mono text-xs text-[var(--color-fg-muted)]">
+    <span>{String(metadata.order).padStart(2, '0')}</span>
+    <span class="rounded-full border border-[var(--color-border)] px-2 py-0.5">{metadata.category}</span>
+  </div>
+  <h3 class="mt-4 font-mono text-base font-semibold tracking-tight">{skill.data.name}</h3>
+  <p class="mt-2 flex-1 text-sm leading-6 text-[var(--color-fg-muted)]">{metadata.tagline}</p>
+  <code class="mt-5 block truncate font-mono text-xs text-[var(--color-accent-fg)]">{metadata.command}</code>
+  <span
+    class="mt-4 font-mono text-xs tracking-wider text-[var(--color-fg-muted)] uppercase transition-colors group-hover:text-[var(--color-fg)]"
+    >Learn more →</span
+  >
+</a>
