@@ -54,7 +54,7 @@ const jsonLd = {
       </div>
       <div class="mt-6 grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-end lg:gap-16 [&>*]:min-w-0">
         <div>
-          <h1 class="font-sans text-5xl leading-[1.05] font-bold tracking-tight break-words sm:text-heading">{skill.data.name}</h1>
+          <h1 class="font-serif font-normal tracking-[-0.025em] text-[44px] leading-[1.04] break-words sm:text-[64px]">{skill.data.name}</h1>
           <p class="mt-5 text-body text-pretty">{metadata.tagline}</p>
         </div>
         <CopyCommand lines={[metadata.command]} label="Invoke in Claude Code" />
@@ -105,7 +105,7 @@ const jsonLd = {
         prev ? (
           <a href={url(`/skills/${prev.id}`)} class="rounded-card border border-line bg-card p-7 transition-colors hover:border-line-strong">
             <span class="text-caption text-ink-muted">← Previous</span>
-            <span class="mt-2 block text-subheading font-semibold">{prev.data.name}</span>
+            <span class="mt-2 block font-serif text-subheading">{prev.data.name}</span>
           </a>
         ) : (
           <span />
@@ -115,7 +115,7 @@ const jsonLd = {
         next && (
           <a href={url(`/skills/${next.id}`)} class="rounded-card border border-line bg-card p-7 text-right transition-colors hover:border-line-strong">
             <span class="text-caption text-ink-muted">Next →</span>
-            <span class="mt-2 block text-subheading font-semibold">{next.data.name}</span>
+            <span class="mt-2 block font-serif text-subheading">{next.data.name}</span>
           </a>
         )
       }

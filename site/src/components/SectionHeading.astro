@@ -10,11 +10,11 @@ const { eyebrow, title, id } = Astro.props;
 <div class="grid gap-6 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
   <div>
     <p class="font-sans text-caption font-semibold tracking-[0.14em] uppercase">{eyebrow}</p>
-    <h2 id={id} class="mt-4 font-sans text-4xl leading-[1.1] font-bold tracking-tight text-balance sm:text-5xl">
+    <h2 id={id} class="mt-4 font-serif font-normal tracking-[-0.025em] text-4xl leading-[1.08] text-balance sm:text-[52px]">
       {title}
     </h2>
   </div>
-  <div class="text-body text-pretty lg:pt-9">
+  <div class="text-body text-pretty text-ink-muted lg:pt-10">
     <slot />
   </div>
 </div>
