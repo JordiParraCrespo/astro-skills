@@ -5,12 +5,12 @@ import { url } from '../lib/site';
 
 <BaseLayout title="Not found" noindex>
   <section class="mx-auto max-w-page px-4 py-32 sm:px-8">
-    <p class="font-sans text-caption font-semibold tracking-[0.14em] uppercase">404</p>
-    <h1 class="mt-4 max-w-3xl text-4xl leading-[1.08] tracking-[-0.025em] sm:text-[64px]">This page is not in the catalog.</h1>
+    <p class="font-mono text-caption font-semibold tracking-[0.14em] uppercase">404</p>
+    <h1 class="mt-4 max-w-3xl font-sans font-bold tracking-[-0.045em] text-4xl leading-[0.98] sm:text-[64px]">This page is not in the catalog.</h1>
     <p class="mt-6 max-w-xl text-body">The skill may have been renamed. The full list is one click away.</p>
     <a
       href={url('/skills')}
-      class="mt-10 inline-block rounded-b-lg bg-card px-8 py-3 font-sans text-body-sm font-medium transition-colors hover:bg-panel"
+      class="mt-10 inline-block rounded-b-lg bg-card px-7 py-3.5 font-mono text-caption font-bold tracking-[0.14em] uppercase transition-colors hover:bg-panel"
       >All skills</a
     >
   </section>

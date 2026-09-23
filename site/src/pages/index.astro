@@ -115,9 +115,9 @@ const jsonLd = {
   <!-- Hero -->
   <section class="mx-auto max-w-page px-4 pt-20 pb-16 sm:px-8 lg:pt-28">
     <div class="grid gap-10 lg:grid-cols-[1.25fr_1fr] lg:gap-20">
-      <h1 class="font-serif font-normal tracking-[-0.025em] text-[44px] leading-[1.04] text-balance sm:text-[64px] lg:text-[76px]">
+      <h1 class="font-sans font-bold tracking-[-0.05em] text-[44px] leading-[0.95] text-balance sm:text-[72px] lg:text-[88px]">
         {skills.length} skills that turn Claude into an{' '}
-        <a href="https://docs.astro.build" class="italic underline decoration-1 underline-offset-[10px]">Astro</a> engineer.
+        <a href="https://docs.astro.build" class="underline decoration-[3px] underline-offset-[10px]">Astro</a> engineer.
       </h1>
       <div class="lg:pt-3">
         <p class="text-body text-pretty">
@@ -125,10 +125,10 @@ const jsonLd = {
           is a focused <a href={url('/skills')} class="underline decoration-1 underline-offset-4">skill</a> that reads
           your project before it touches it, and hands back fixes you can verify.
         </p>
-        <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 font-sans">
+        <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 font-mono">
           <a
             href="#install"
-            class="rounded-lg bg-action px-8 py-3 text-body-sm font-semibold text-ink transition-colors hover:bg-action-hover"
+            class="rounded-lg bg-action px-7 py-3.5 text-caption font-bold tracking-[0.14em] uppercase text-ink transition-colors hover:bg-action-hover"
             >Install the plugin</a
           >
           <a href={url('/skills')} class="text-body-sm underline decoration-1 underline-offset-4 hover:decoration-2"
@@ -138,12 +138,12 @@ const jsonLd = {
       </div>
     </div>
 
-    <dl class="mt-16 grid grid-cols-2 border-t border-line font-sans sm:grid-cols-4">
+    <dl class="mt-16 grid grid-cols-2 border-t border-line font-mono sm:grid-cols-4">
       {
         stats.map((s, i) => (
           <div class:list={['py-6 pr-4', i > 0 && 'sm:border-l sm:border-line sm:pl-6', i % 2 === 1 && 'border-l border-line pl-6 sm:pl-6', i >= 2 && 'border-t border-line sm:border-t-0']}>
             <dt class="text-caption text-ink-muted">{s.label}</dt>
-            <dd class="mt-2 font-serif text-5xl font-light tracking-[-0.02em] tabular-nums">{s.value}</dd>
+            <dd class="mt-2 font-sans text-5xl font-bold tracking-[-0.04em]">{s.value}</dd>
           </div>
         ))
       }
@@ -151,8 +151,8 @@ const jsonLd = {
 
     <div class="mt-4 grid items-center gap-10 rounded-card bg-feature p-6 sm:p-12 lg:grid-cols-[1fr_1.35fr] lg:gap-16 [&>*]:min-w-0">
       <div>
-        <p class="font-sans text-caption font-semibold tracking-[0.14em] uppercase">Field notes</p>
-        <p class="mt-5 text-3xl leading-[1.15] tracking-[-0.02em] text-balance sm:text-[40px]">
+        <p class="font-mono text-caption font-semibold tracking-[0.14em] uppercase">Field notes</p>
+        <p class="mt-5 font-sans text-3xl leading-[1.02] font-bold tracking-[-0.04em] text-balance sm:text-[40px]">
           One command reads the project, sends out five reviewers, and returns a score you can defend.
         </p>
         <p class="mt-6 text-body-sm leading-relaxed text-ink-muted">
@@ -174,8 +174,8 @@ const jsonLd = {
       {
         steps.map((s, i) => (
           <li class="flex flex-col rounded-card border border-line bg-card p-7">
-            <span class="font-sans text-caption text-ink-muted tabular-nums">Step {i + 1}</span>
-            <h3 class="mt-4 font-sans text-[19px] font-semibold tracking-[-0.015em]">{s.title}</h3>
+            <span class="font-mono text-caption text-ink-muted tabular-nums">Step {i + 1}</span>
+            <h3 class="mt-4 font-sans text-xl font-bold tracking-[-0.03em]">{s.title}</h3>
             <p class="mt-3 flex-1 text-body-sm leading-relaxed">{s.body}</p>
             <code class="mt-6 block truncate border-t border-line pt-4 font-mono text-[13px] text-ink-muted">{s.code}</code>
           </li>
@@ -198,7 +198,7 @@ const jsonLd = {
           return (
             <div class="mt-16">
               <div class="flex flex-wrap items-baseline gap-x-5 gap-y-1 border-b border-ink pb-3">
-                <h3 class="font-sans text-caption font-semibold tracking-[0.14em] uppercase">
+                <h3 class="font-mono text-caption font-semibold tracking-[0.14em] uppercase">
                   {CATEGORY_LABELS[cat]?.label}
                 </h3>
                 <p class="text-body-sm text-ink-muted">{CATEGORY_LABELS[cat]?.blurb}</p>
@@ -225,9 +225,9 @@ const jsonLd = {
         {
           workflows.map((w) => (
             <div class="rounded-card bg-card p-7">
-              <h3 class="font-sans text-[19px] font-semibold tracking-[-0.015em]">{w.title}</h3>
+              <h3 class="font-sans text-xl font-bold tracking-[-0.03em]">{w.title}</h3>
               <p class="mt-3 text-body-sm leading-relaxed">{w.body}</p>
-              <ol class="mt-6 border-t border-line font-sans">
+              <ol class="mt-6 border-t border-line font-mono">
                 {w.skills.map((name, i) => (
                   <li class="border-b border-line">
                     <a href={url(`/skills/${name}`)} class="flex items-baseline gap-3 py-3 text-body-sm hover:underline">
@@ -252,11 +252,11 @@ const jsonLd = {
       matrix. Every finding names its file and line, and says how you would know the fix failed.
     </SectionHeading>
     <div class="mt-14 rounded-card border border-line bg-card p-6 sm:p-10">
-      <div class="flex flex-wrap items-baseline justify-between gap-2 border-b border-ink pb-4 font-sans">
+      <div class="flex flex-wrap items-baseline justify-between gap-2 border-b border-ink pb-4 font-mono">
         <p class="text-caption font-semibold tracking-[0.14em] uppercase">ASTRO-AUDIT.md</p>
         <p class="text-caption text-ink-muted">astro ^5.14 · static · 38 pages</p>
       </div>
-      <div class="grid grid-cols-3 border-b border-line font-sans sm:grid-cols-6">
+      <div class="grid grid-cols-3 border-b border-line font-mono sm:grid-cols-6">
         {
           [
             ['Overall', 72],
@@ -267,14 +267,14 @@ const jsonLd = {
             ['Security', 94],
           ].map(([label, value], i) => (
             <div class:list={['py-6', i % 3 !== 0 && 'border-l border-line pl-4', i === 3 && 'sm:border-l sm:pl-4']}>
-              <p class:list={['font-serif text-[40px] leading-none tracking-[-0.02em] tabular-nums', i === 0 ? 'font-semibold' : 'font-light']}>{value}</p>
+              <p class:list={['font-sans text-[40px] leading-none tracking-[-0.04em]', i === 0 ? 'font-bold' : 'font-medium']}>{value}</p>
               <p class="mt-1 truncate text-caption text-ink-muted">{label}</p>
             </div>
           ))
         }
       </div>
       <div class="overflow-x-auto">
-        <table class="w-full min-w-[560px] text-left font-sans text-body-sm">
+        <table class="w-full min-w-[560px] text-left font-mono text-body-sm">
           <thead class="text-caption text-ink-muted">
             <tr class="border-b border-line">
               <th class="py-3 pr-4 font-normal">Priority</th>
@@ -293,7 +293,7 @@ const jsonLd = {
               ].map(([p, f, e, i]) => (
                 <tr class="border-b border-line last:border-0">
                   <td class:list={['py-3.5 pr-4', p === 'Critical' && 'font-semibold']}>{p}</td>
-                  <td class="py-3.5 pr-4 font-serif">{f}</td>
+                  <td class="py-3.5 pr-4 font-mono">{f}</td>
                   <td class="py-3.5 pr-4 tabular-nums">{e}</td>
                   <td class="py-3.5 tabular-nums">{i}</td>
                 </tr>
@@ -314,7 +314,7 @@ const jsonLd = {
       </SectionHeading>
       <div class="mt-14 overflow-x-auto">
         <table class="w-full min-w-[680px] text-left">
-          <thead class="font-sans text-caption">
+          <thead class="font-mono text-caption">
             <tr class="border-b border-ink">
               <th scope="col" class="py-3 pr-6 font-normal text-ink-muted">Topic</th>
               <th scope="col" class="py-3 pr-6 font-normal text-ink-muted">Without skills</th>
@@ -325,7 +325,7 @@ const jsonLd = {
             {
               comparison.map(([topic, before, after]) => (
                 <tr class="border-b border-line">
-                  <th scope="row" class="py-4 pr-6 font-sans font-semibold">
+                  <th scope="row" class="py-4 pr-6 font-mono font-semibold">
                     {topic}
                   </th>
                   <td class="py-4 pr-6 text-ink-muted">{before}</td>
@@ -347,19 +347,19 @@ const jsonLd = {
       </SectionHeading>
       <div class="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-2 [&>*]:min-w-0">
         <div>
-          <h3 class="mb-3 font-sans text-body-sm font-semibold">
+          <h3 class="mb-3 font-mono text-body-sm font-semibold">
             Plugin marketplace <span class="font-normal text-ink-muted">· recommended</span>
           </h3>
           <CopyCommand lines={PLUGIN_INSTALL} label="Claude Code" />
         </div>
         <div>
-          <h3 class="mb-3 font-sans text-body-sm font-semibold">
+          <h3 class="mb-3 font-mono text-body-sm font-semibold">
             Manual install <span class="font-normal text-ink-muted">· macOS, Linux</span>
           </h3>
           <CopyCommand lines={MANUAL_INSTALL} label="bash" />
         </div>
         <div class="lg:col-span-2">
-          <h3 class="mb-3 font-sans text-body-sm font-semibold">Then, inside any Astro project</h3>
+          <h3 class="mb-3 font-mono text-body-sm font-semibold">Then, inside any Astro project</h3>
           <CopyCommand lines={['claude', '/astro audit']} label="Your project" />
         </div>
       </div>
@@ -370,14 +370,14 @@ const jsonLd = {
   <section class="border-t border-line" aria-labelledby="faq">
     <div class="mx-auto grid max-w-page gap-10 px-4 py-24 sm:px-8 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
       <div>
-        <p class="font-sans text-caption font-semibold tracking-[0.14em] uppercase">FAQ</p>
-        <h2 id="faq" class="mt-4 font-serif font-normal tracking-[-0.025em] text-4xl leading-[1.08] sm:text-[52px]">Questions, answered</h2>
+        <p class="font-mono text-caption font-semibold tracking-[0.14em] uppercase">FAQ</p>
+        <h2 id="faq" class="mt-4 font-sans font-bold tracking-[-0.045em] text-4xl leading-[0.98] sm:text-[52px]">Questions, answered</h2>
       </div>
       <div class="border-t border-ink">
         {
           faqs.map((f) => (
             <details name="faq" class="group border-b border-line">
-              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 font-sans text-body-sm font-semibold [&::-webkit-details-marker]:hidden">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 font-mono text-body-sm font-semibold [&::-webkit-details-marker]:hidden">
                 {f.q}
                 <span aria-hidden="true" class="text-subheading font-normal transition-transform group-open:rotate-45">
                   +
@@ -395,15 +395,15 @@ const jsonLd = {
   <section class="mx-auto max-w-page px-4 pb-24 sm:px-8">
     <div class="rounded-card bg-panel px-6 py-16 sm:px-16">
       <div class="grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-end">
-        <h2 class="text-4xl leading-[1.08] tracking-[-0.025em] text-balance sm:text-[56px]">
+        <h2 class="font-sans font-bold tracking-[-0.045em] text-4xl leading-[0.98] text-balance sm:text-[56px]">
           Build Astro sites as if a specialist were reviewing every change.
         </h2>
         <div>
           <p class="text-body-sm leading-relaxed">
             Open source, MIT licensed, and written in plain Markdown you can read, fork and extend.
           </p>
-          <div class="mt-6 flex flex-wrap gap-x-6 gap-y-3 font-sans">
-            <a href={url('/skills')} class="rounded-b-lg bg-card px-8 py-3 text-body-sm font-medium transition-colors hover:bg-ivory-medium"
+          <div class="mt-6 flex flex-wrap gap-x-6 gap-y-3 font-mono">
+            <a href={url('/skills')} class="rounded-b-lg bg-card px-7 py-3.5 text-caption font-bold tracking-[0.14em] uppercase transition-colors hover:bg-ivory-medium"
               >Read the skills</a
             >
             <a href={GITHUB_URL} class="self-center text-body-sm underline decoration-1 underline-offset-4 hover:decoration-2"

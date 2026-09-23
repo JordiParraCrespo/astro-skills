@@ -1,7 +1,7 @@
-@import '@fontsource-variable/source-serif-4/opsz.css';
-@import '@fontsource-variable/source-serif-4/opsz-italic.css';
-@import '@fontsource-variable/inter/wght.css';
-@import '@fontsource-variable/jetbrains-mono/wght.css';
+@import '@fontsource-variable/space-grotesk/wght.css';
+@import '@fontsource/ibm-plex-mono/latin-400.css';
+@import '@fontsource/ibm-plex-mono/latin-500.css';
+@import '@fontsource/ibm-plex-mono/latin-700.css';
 @import 'tailwindcss';
 
 /* =============================================================================
@@ -42,20 +42,18 @@
   --color-action: var(--color-clay);
   --color-action-hover: var(--color-clay-deep);
 
-  /* Families — self-hosted variable fonts (latin subset ~40–60 KB each), metric-close fallbacks */
-  --font-serif: 'Source Serif 4 Variable', Charter, Georgia, ui-serif, serif;
-  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  /* Families — self-hosted via Fontsource. Grotesk for display and titles, mono for everything else. */
+  --font-sans: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
   /* Type scale */
-  --text-caption: 12px;
-  --text-caption--line-height: 1.4;
-  --text-caption--letter-spacing: -0.24px;
-  --text-body-sm: 16px;
-  --text-body-sm--line-height: 1.55;
-  --text-body-sm--letter-spacing: -0.08px;
-  --text-body: 20px;
-  --text-body--line-height: 1.5;
+  --text-caption: 11px;
+  --text-caption--line-height: 1.5;
+  --text-caption--letter-spacing: 0.04em;
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 1.7;
+  --text-body: 16px;
+  --text-body--line-height: 1.7;
   --text-subheading: 24px;
   --text-subheading--line-height: 1.3;
   --text-subheading--letter-spacing: -0.05px;
@@ -74,8 +72,7 @@
     color-scheme: light;
     background: var(--color-canvas);
     color: var(--color-ink);
-    font-family: var(--font-serif);
-    font-optical-sizing: auto;
+    font-family: var(--font-mono);
     font-kerning: normal;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -104,9 +101,9 @@
 
 /* tailwind-exception: rendered SKILL.md markdown has no classes to hang utilities on. */
 .prose {
-  font-family: var(--font-serif);
-  font-size: 1.1875rem;
-  line-height: 1.65;
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+  line-height: 1.75;
   color: var(--color-ink);
 }
 .prose > * + * {
@@ -116,19 +113,20 @@
   display: none;
 }
 .prose h2 {
-  font-size: 2.125rem;
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
+  font-family: var(--font-sans);
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
   margin-top: 2.25em;
   padding-top: 1.25em;
   border-top: 1px solid var(--color-line);
 }
 .prose h3 {
   font-family: var(--font-sans);
-  font-size: 1.0625rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   margin-top: 1.75em;
 }
 .prose strong {
@@ -165,7 +163,7 @@
 }
 .prose :not(pre) > code {
   font-family: var(--font-mono);
-  font-size: 0.78em;
+  font-size: 0.92em;
   border-radius: 4px;
   background: var(--color-card);
   border: 1px solid var(--color-line);
@@ -183,9 +181,8 @@
   overflow-x: auto;
 }
 .prose blockquote {
-  border-left: 1px solid var(--color-ink);
+  border-left: 2px solid var(--color-ink);
   padding-left: 1.25rem;
-  font-style: italic;
   color: var(--color-ink-muted);
 }
 .prose table {
@@ -194,9 +191,8 @@
   width: 100%;
   overflow-x: auto;
   border-collapse: collapse;
-  font-family: var(--font-sans);
-  font-size: 0.9375rem;
-  line-height: 1.5;
+  font-size: 0.875rem;
+  line-height: 1.6;
 }
 .prose th,
 .prose td {

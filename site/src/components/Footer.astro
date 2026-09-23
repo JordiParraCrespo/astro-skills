@@ -29,21 +29,21 @@ const columns = [
 ];
 ---
 
-<footer class="bg-invert font-sans text-ink-on-invert">
+<footer class="bg-invert font-mono text-ink-on-invert">
   <div class="mx-auto grid max-w-page gap-12 px-4 py-20 sm:px-8 md:grid-cols-[2fr_repeat(3,1fr)]">
     <div>
-      <a href={url('/')} class="flex items-center gap-2 text-caption font-bold tracking-[0.14em] uppercase">
+      <a href={url('/')} class="flex items-center gap-2 font-sans text-[15px] font-bold tracking-[-0.01em]">
         <Logo class="size-5" />
         Astro Skills
       </a>
-      <p class="mt-5 max-w-xs font-serif text-body-sm leading-relaxed text-ink-on-invert-muted">
+      <p class="mt-5 max-w-xs font-mono text-body-sm leading-relaxed text-ink-on-invert-muted">
         Open-source Claude Code skills for fast, accessible, well-ranked Astro sites. MIT licensed.
       </p>
     </div>
     {
       columns.map((c) => (
         <div>
-          <h2 class="text-caption font-semibold">{c.title}</h2>
+          <h2 class="text-caption font-bold tracking-[0.18em] uppercase">{c.title}</h2>
           <ul class="mt-4 space-y-2 text-caption">
             {c.links.map((l) => (
               <li>

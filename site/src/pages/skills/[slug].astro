@@ -36,7 +36,7 @@ const jsonLd = {
 
 <BaseLayout title={skill.data.name} description={metadata.tagline} jsonLd={jsonLd}>
   <div class="mx-auto max-w-page px-4 pt-10 pb-24 sm:px-8">
-    <nav aria-label="Breadcrumb" class="font-sans text-caption text-ink-muted">
+    <nav aria-label="Breadcrumb" class="font-mono text-caption text-ink-muted">
       <a href={url('/')} class="underline decoration-1 underline-offset-4 hover:text-ink">Home</a>
       <span class="mx-2">/</span>
       <a href={url('/skills')} class="underline decoration-1 underline-offset-4 hover:text-ink">Skills</a>
@@ -45,7 +45,7 @@ const jsonLd = {
     </nav>
 
     <header class="mt-10 rounded-card bg-feature p-6 sm:p-12">
-      <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1 font-sans text-caption">
+      <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1 font-mono text-caption">
         <span class="tabular-nums">{String(metadata.order).padStart(2, '0')}</span>
         <a href={url(`/skills#${metadata.category}`)} class="font-semibold tracking-[0.14em] uppercase underline decoration-1 underline-offset-4">
           {CATEGORY_LABELS[metadata.category]?.label}
@@ -54,7 +54,7 @@ const jsonLd = {
       </div>
       <div class="mt-6 grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-end lg:gap-16 [&>*]:min-w-0">
         <div>
-          <h1 class="font-serif font-normal tracking-[-0.025em] text-[44px] leading-[1.04] break-words sm:text-[64px]">{skill.data.name}</h1>
+          <h1 class="font-sans font-bold tracking-[-0.045em] text-[40px] leading-[0.98] break-words sm:text-[64px]">{skill.data.name}</h1>
           <p class="mt-5 text-body text-pretty">{metadata.tagline}</p>
         </div>
         <CopyCommand lines={[metadata.command]} label="Invoke in Claude Code" />
@@ -66,7 +66,7 @@ const jsonLd = {
         <Content />
       </article>
       <aside class="order-first lg:order-none">
-        <div class="space-y-10 font-sans lg:sticky lg:top-24">
+        <div class="space-y-10 font-mono lg:sticky lg:top-24">
           {
             toc.length > 0 && (
               <nav aria-label="On this page" class="hidden lg:block">
@@ -87,7 +87,7 @@ const jsonLd = {
             triggers.length > 0 && (
               <div>
                 <p class="text-caption font-semibold tracking-[0.14em] uppercase">Triggers on</p>
-                <p class="mt-4 font-serif text-body-sm leading-relaxed text-ink-muted">{triggers.join(' · ')}</p>
+                <p class="mt-4 font-mono text-body-sm leading-relaxed text-ink-muted">{triggers.join(' · ')}</p>
               </div>
             )
           }
@@ -100,12 +100,12 @@ const jsonLd = {
       </aside>
     </div>
 
-    <nav class="mt-24 grid gap-4 border-t border-ink pt-8 font-sans sm:grid-cols-2" aria-label="Skill pagination">
+    <nav class="mt-24 grid gap-4 border-t border-ink pt-8 font-mono sm:grid-cols-2" aria-label="Skill pagination">
       {
         prev ? (
           <a href={url(`/skills/${prev.id}`)} class="rounded-card border border-line bg-card p-7 transition-colors hover:border-line-strong">
             <span class="text-caption text-ink-muted">← Previous</span>
-            <span class="mt-2 block font-serif text-subheading">{prev.data.name}</span>
+            <span class="mt-2 block font-sans text-subheading font-bold tracking-[-0.03em]">{prev.data.name}</span>
           </a>
         ) : (
           <span />
@@ -115,7 +115,7 @@ const jsonLd = {
         next && (
           <a href={url(`/skills/${next.id}`)} class="rounded-card border border-line bg-card p-7 text-right transition-colors hover:border-line-strong">
             <span class="text-caption text-ink-muted">Next →</span>
-            <span class="mt-2 block font-serif text-subheading">{next.data.name}</span>
+            <span class="mt-2 block font-sans text-subheading font-bold tracking-[-0.03em]">{next.data.name}</span>
           </a>
         )
       }
