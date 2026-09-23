@@ -29,25 +29,25 @@ const columns = [
 ];
 ---
 
-<footer class="border-t border-[var(--color-border)]">
-  <div class="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-[1.5fr_repeat(3,1fr)]">
+<footer class="bg-invert font-sans text-ink-on-invert">
+  <div class="mx-auto grid max-w-page gap-12 px-4 py-20 sm:px-8 md:grid-cols-[2fr_repeat(3,1fr)]">
     <div>
-      <a href={url('/')} class="flex items-center gap-2.5 font-semibold">
-        <Logo class="size-7" />
-        astro-skills
+      <a href={url('/')} class="flex items-center gap-2 text-caption font-bold tracking-[0.14em] uppercase">
+        <Logo class="size-5" />
+        Astro Skills
       </a>
-      <p class="mt-4 max-w-xs text-sm text-[var(--color-fg-muted)]">
-        Open-source Claude Code skills for building fast, accessible, well-ranked Astro sites. MIT licensed.
+      <p class="mt-5 max-w-xs font-serif text-body-sm leading-relaxed text-ink-on-invert-muted">
+        Open-source Claude Code skills for fast, accessible, well-ranked Astro sites. MIT licensed.
       </p>
     </div>
     {
       columns.map((c) => (
         <div>
-          <h2 class="font-mono text-xs tracking-widest text-[var(--color-fg-muted)] uppercase">{c.title}</h2>
-          <ul class="mt-4 space-y-2.5 text-sm">
+          <h2 class="text-caption font-semibold">{c.title}</h2>
+          <ul class="mt-4 space-y-2 text-caption">
             {c.links.map((l) => (
               <li>
-                <a href={l.href} class="text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-fg)]">
+                <a href={l.href} class="text-ink-on-invert-muted transition-colors hover:text-ink-on-invert">
                   {l.label}
                 </a>
               </li>
@@ -57,8 +57,8 @@ const columns = [
       ))
     }
   </div>
-  <div class="border-t border-[var(--color-border)]">
-    <p class="mx-auto max-w-6xl px-4 py-6 text-xs text-[var(--color-fg-muted)] sm:px-6">
+  <div class="border-t border-line-invert">
+    <p class="mx-auto max-w-page px-4 py-6 text-caption text-ink-on-invert-muted sm:px-8">
       Not affiliated with Astro Technology Company or Anthropic. Built with Astro.
     </p>
   </div>

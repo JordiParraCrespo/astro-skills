@@ -113,81 +113,71 @@ const jsonLd = {
 
 <BaseLayout jsonLd={jsonLd}>
   <!-- Hero -->
-  <section class="relative overflow-hidden border-b border-[var(--color-border)]">
-    <div
-      aria-hidden="true"
-      class="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,var(--color-border)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-border)_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_at_top,black_20%,transparent_70%)] bg-[size:48px_48px] opacity-50"
-    >
-    </div>
-    <div
-      aria-hidden="true"
-      class="pointer-events-none absolute -top-40 left-1/2 h-[480px] w-[900px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,color-mix(in_oklab,var(--color-accent)_30%,transparent),color-mix(in_oklab,var(--color-accent-2)_18%,transparent),transparent)] blur-3xl"
-    >
-    </div>
-    <div class="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 [&>*]:min-w-0 px-4 pt-16 pb-20 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:pt-24">
-      <div>
-        <p
-          class="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1 font-mono text-xs text-[var(--color-fg-muted)]"
-        >
-          <span class="size-1.5 rounded-full bg-[var(--color-success)]"></span>
-          Claude Code plugin · Astro 5+ · MIT
+  <section class="mx-auto max-w-page px-4 pt-20 pb-16 sm:px-8 lg:pt-28">
+    <div class="grid gap-10 lg:grid-cols-[1.25fr_1fr] lg:gap-20">
+      <h1 class="font-sans text-5xl leading-[1.05] font-bold tracking-tight text-balance sm:text-heading">
+        {skills.length} skills that turn Claude into an{' '}
+        <a href="https://docs.astro.build" class="underline decoration-2 underline-offset-[6px]">Astro</a> engineer.
+      </h1>
+      <div class="lg:pt-3">
+        <p class="text-body text-pretty">
+          Audits, islands, content collections, i18n, SEO, images, performance, accessibility and upgrades. Each one
+          is a focused <a href={url('/skills')} class="underline decoration-1 underline-offset-4">skill</a> that reads
+          your project before it touches it, and hands back fixes you can verify.
         </p>
-        <h1 class="mt-6 text-4xl font-semibold tracking-tight text-balance sm:text-6xl">
-          {skills.length} Astro skills.
-          <span
-            class="block bg-[linear-gradient(90deg,var(--color-accent),var(--color-accent-2))] bg-clip-text text-transparent"
-            >One install.</span
-          >
-        </h1>
-        <p class="mt-6 max-w-xl text-lg leading-8 text-[var(--color-fg-muted)] text-pretty">
-          Turn Claude Code into a senior Astro engineer. Audits, islands, content collections, i18n, SEO, images,
-          performance, accessibility and upgrades, each a focused skill that reads your project before it touches it.
-        </p>
-        <div class="mt-8 flex flex-wrap gap-3">
+        <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 font-sans">
           <a
             href="#install"
-            class="inline-flex h-11 items-center rounded-lg bg-[var(--color-primary)] px-5 text-sm font-medium text-[var(--color-primary-fg)] transition-opacity hover:opacity-90"
+            class="rounded-lg bg-action px-8 py-3 text-body-sm font-semibold text-ink transition-colors hover:bg-action-hover"
             >Install the plugin</a
           >
-          <a
-            href={url('/skills')}
-            class="inline-flex h-11 items-center rounded-lg border border-[var(--color-border-strong)] px-5 text-sm font-medium transition-colors hover:bg-[var(--color-surface-2)]"
+          <a href={url('/skills')} class="text-body-sm underline decoration-1 underline-offset-4 hover:decoration-2"
             >Browse all skills →</a
           >
         </div>
-        <dl class="mt-12 grid max-w-lg grid-cols-4 gap-4 border-t border-[var(--color-border)] pt-6">
-          {
-            stats.map((s) => (
-              <div>
-                <dt class="font-mono text-[11px] tracking-wider text-[var(--color-fg-muted)] uppercase">{s.label}</dt>
-                <dd class="mt-1 text-2xl font-semibold tabular-nums">{s.value}</dd>
-              </div>
-            ))
-          }
-        </dl>
+      </div>
+    </div>
+
+    <dl class="mt-16 grid grid-cols-2 border-t border-line font-sans sm:grid-cols-4">
+      {
+        stats.map((s, i) => (
+          <div class:list={['py-6 pr-4', i > 0 && 'sm:border-l sm:border-line sm:pl-6', i % 2 === 1 && 'border-l border-line pl-6 sm:pl-6', i >= 2 && 'border-t border-line sm:border-t-0']}>
+            <dt class="text-caption text-ink-muted">{s.label}</dt>
+            <dd class="mt-1 text-4xl font-bold tabular-nums">{s.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    <div class="mt-4 grid items-center gap-10 rounded-card bg-feature p-6 sm:p-12 lg:grid-cols-[1fr_1.35fr] lg:gap-16 [&>*]:min-w-0">
+      <div>
+        <p class="font-sans text-caption font-semibold tracking-[0.14em] uppercase">Field notes</p>
+        <p class="mt-4 text-3xl leading-tight text-balance sm:text-[40px]">
+          One command reads the project, sends out five reviewers, and returns a score you can defend.
+        </p>
+        <p class="mt-6 text-body-sm leading-relaxed text-ink-muted">
+          <code class="font-mono text-[15px] text-ink">/astro audit</code> runs a deterministic scanner first, then
+          architecture, performance, SEO, accessibility and security agents in parallel.
+        </p>
       </div>
       <Terminal />
     </div>
   </section>
 
   <!-- How it works -->
-  <section class="mx-auto max-w-6xl px-4 py-24 sm:px-6" aria-labelledby="how-it-works">
-    <SectionHeading eyebrow="How it works" title="From question to verified fix in four steps" id="how-it-works">
-      Skills are small, focused playbooks. Claude picks the right one, grounds it in your real project, and hands back
+  <section class="mx-auto max-w-page px-4 py-24 sm:px-8" aria-labelledby="how-it-works">
+    <SectionHeading eyebrow="How it works" title="From question to verified fix" id="how-it-works">
+      Skills are short, focused playbooks. Claude picks the right one, grounds it in your real project, and hands back
       changes you can check.
     </SectionHeading>
-    <ol class="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <ol class="mt-14 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 [&>*]:min-w-0">
       {
         steps.map((s, i) => (
-          <li class="flex flex-col rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
-            <span class="grid size-8 place-items-center rounded-full border border-[var(--color-border-strong)] font-mono text-sm">
-              {i + 1}
-            </span>
-            <h3 class="mt-5 font-semibold">{s.title}</h3>
-            <p class="mt-2 flex-1 text-sm leading-6 text-[var(--color-fg-muted)]">{s.body}</p>
-            <code class="mt-5 block truncate rounded-md border border-[var(--color-border)] bg-[var(--color-term-bg)] px-3 py-2 font-mono text-xs text-[var(--color-term-fg)]">
-              {s.code}
-            </code>
+          <li class="flex flex-col rounded-card border border-line bg-card p-7">
+            <span class="font-sans text-caption text-ink-muted tabular-nums">Step {i + 1}</span>
+            <h3 class="mt-4 font-sans text-subheading font-semibold">{s.title}</h3>
+            <p class="mt-3 flex-1 text-body-sm leading-relaxed">{s.body}</p>
+            <code class="mt-6 block truncate border-t border-line pt-4 font-mono text-[13px] text-ink-muted">{s.code}</code>
           </li>
         ))
       }
@@ -195,21 +185,23 @@ const jsonLd = {
   </section>
 
   <!-- Skills -->
-  <section class="border-y border-[var(--color-border)] bg-[var(--color-surface)]" aria-labelledby="skills">
-    <div class="mx-auto max-w-6xl px-4 py-24 sm:px-6">
-      <SectionHeading eyebrow="The skills" title="A specialist for every part of an Astro site" id="skills">
-        Every skill ships a workflow, copy-paste patterns, a checklist and the common mistakes to avoid. Invoke one
-        directly or let <code class="font-mono text-[var(--color-fg)]">/astro</code> route for you.
+  <section class="border-t border-line" aria-labelledby="skills">
+    <div class="mx-auto max-w-page px-4 py-24 sm:px-8">
+      <SectionHeading eyebrow="The catalog" title="A specialist for every part of an Astro site" id="skills">
+        Every skill has a workflow, code examples, a checklist and the common mistakes to avoid. Invoke one directly or
+        let <code class="font-mono text-[17px]">/astro</code> route for you.
       </SectionHeading>
       {
         CATEGORIES.map((cat) => {
           const group = skills.filter((s) => s.data.metadata.category === cat);
           if (!group.length) return null;
           return (
-            <div class="mt-14">
-              <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b border-[var(--color-border)] pb-3">
-                <h3 class="font-mono text-sm tracking-widest uppercase">{CATEGORY_LABELS[cat]?.label}</h3>
-                <p class="text-sm text-[var(--color-fg-muted)]">{CATEGORY_LABELS[cat]?.blurb}</p>
+            <div class="mt-16">
+              <div class="flex flex-wrap items-baseline gap-x-5 gap-y-1 border-b border-ink pb-3">
+                <h3 class="font-sans text-caption font-semibold tracking-[0.14em] uppercase">
+                  {CATEGORY_LABELS[cat]?.label}
+                </h3>
+                <p class="text-body-sm text-ink-muted">{CATEGORY_LABELS[cat]?.blurb}</p>
               </div>
               <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {group.map((skill) => (
@@ -224,223 +216,201 @@ const jsonLd = {
   </section>
 
   <!-- Workflows -->
-  <section class="mx-auto max-w-6xl px-4 py-24 sm:px-6" aria-labelledby="workflows">
-    <SectionHeading eyebrow="Choose a workflow" title="Not sure where to start?" id="workflows">
-      Pick the situation that sounds like yours. Each path chains three skills in the order that pays off fastest.
-    </SectionHeading>
-    <div class="mt-12 grid gap-4 md:grid-cols-3">
-      {
-        workflows.map((w) => (
-          <div class="rounded-xl border border-[var(--color-border)] p-6">
-            <h3 class="font-semibold">{w.title}</h3>
-            <p class="mt-2 text-sm leading-6 text-[var(--color-fg-muted)]">{w.body}</p>
-            <ol class="mt-5 space-y-2">
-              {w.skills.map((name, i) => (
-                <li>
-                  <a
-                    href={url(`/skills/${name}`)}
-                    class="flex items-center gap-3 rounded-md border border-[var(--color-border)] px-3 py-2 font-mono text-sm transition-colors hover:bg-[var(--color-surface-2)]"
-                  >
-                    <span class="text-[var(--color-fg-muted)]">{i + 1}.</span>
-                    {name}
-                  </a>
-                </li>
-              ))}
-            </ol>
-          </div>
-        ))
-      }
+  <section class="border-t border-line bg-panel" aria-labelledby="workflows">
+    <div class="mx-auto max-w-page px-4 py-24 sm:px-8">
+      <SectionHeading eyebrow="Choose a workflow" title="Not sure where to start?" id="workflows">
+        Pick the situation that sounds like yours. Each path chains three skills in the order that pays off fastest.
+      </SectionHeading>
+      <div class="mt-14 grid gap-4 md:grid-cols-3">
+        {
+          workflows.map((w) => (
+            <div class="rounded-card bg-card p-7">
+              <h3 class="font-sans text-subheading font-semibold">{w.title}</h3>
+              <p class="mt-3 text-body-sm leading-relaxed">{w.body}</p>
+              <ol class="mt-6 border-t border-line font-sans">
+                {w.skills.map((name, i) => (
+                  <li class="border-b border-line">
+                    <a href={url(`/skills/${name}`)} class="flex items-baseline gap-3 py-3 text-body-sm hover:underline">
+                      <span class="text-caption text-ink-muted tabular-nums">{i + 1}</span>
+                      {name}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          ))
+        }
+      </div>
     </div>
   </section>
 
   <!-- Sample output -->
-  <section class="border-y border-[var(--color-border)] bg-[var(--color-surface)]" aria-labelledby="sample">
-    <div class="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[1fr_1.2fr] [&>*]:min-w-0">
-      <SectionHeading eyebrow="Sample output" title="Scores you can defend, fixes you can verify" id="sample">
-        <p>
-          <code class="font-mono text-[var(--color-fg)]">/astro audit</code> writes an
-          <code class="font-mono text-[var(--color-fg)]">ASTRO-AUDIT.md</code> with an overall score, a score per category
-          and a priority matrix. Every finding says how you would know the fix failed.
-        </p>
-        <ul class="mt-6 space-y-3 text-sm">
-          <li class="flex gap-3">
-            <span class="text-[var(--color-success)]">✓</span> Deterministic scanner facts, then agent judgement
-          </li>
-          <li class="flex gap-3">
-            <span class="text-[var(--color-success)]">✓</span> file:line for every finding
-          </li>
-          <li class="flex gap-3">
-            <span class="text-[var(--color-success)]">✓</span> Effort and impact to sort quick wins from projects
-          </li>
-        </ul>
-      </SectionHeading>
-      <div class="rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] p-6">
-        <div class="flex items-baseline justify-between">
-          <p class="font-mono text-xs tracking-widest text-[var(--color-fg-muted)] uppercase">ASTRO-AUDIT.md</p>
-          <p class="font-mono text-xs text-[var(--color-fg-muted)]">astro ^5.14 · static</p>
-        </div>
-        <div class="mt-5 grid grid-cols-3 gap-3 sm:grid-cols-6">
-          {
-            [
-              ['Overall', 72],
-              ['Arch', 86],
-              ['Perf', 61],
-              ['SEO', 70],
-              ['A11y', 78],
-              ['Security', 94],
-            ].map(([label, value]) => (
-              <div class="rounded-lg border border-[var(--color-border)] p-3 text-center">
-                <p class="text-2xl font-semibold tabular-nums">{value}</p>
-                <p class="mt-1 font-mono text-[10px] tracking-wider text-[var(--color-fg-muted)] uppercase">{label}</p>
-              </div>
-            ))
-          }
-        </div>
-        <div class="mt-6 overflow-x-auto">
-          <table class="w-full min-w-[480px] text-left text-sm">
-            <thead class="font-mono text-[11px] tracking-wider text-[var(--color-fg-muted)] uppercase">
-              <tr class="border-b border-[var(--color-border)]">
-                <th class="py-2 pr-3 font-normal">Priority</th>
-                <th class="py-2 pr-3 font-normal">Finding</th>
-                <th class="py-2 pr-3 font-normal">Effort</th>
-                <th class="py-2 font-normal">Impact</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                [
-                  ['Critical', 'Hero image lazy-loaded (LCP 4.1s)', 'S', 'L', 'var(--color-danger)'],
-                  ['High', '3 islands use client:load below the fold', 'S', 'M', 'var(--color-warning)'],
-                  ['High', 'No canonical or hreflang on /es/ routes', 'M', 'L', 'var(--color-warning)'],
-                  ['Quick win', 'Add robots.txt endpoint with sitemap', 'S', 'S', 'var(--color-success)'],
-                ].map(([p, f, e, i, color]) => (
-                  <tr class="border-b border-[var(--color-border)] last:border-0">
-                    <td class="py-2.5 pr-3">
-                      <span class="inline-flex items-center gap-1.5 font-mono text-xs">
-                        <span class="size-1.5 rounded-full" style={`background:${color}`} />
-                        {p}
-                      </span>
-                    </td>
-                    <td class="py-2.5 pr-3 text-[var(--color-fg-muted)]">{f}</td>
-                    <td class="py-2.5 pr-3 font-mono">{e}</td>
-                    <td class="py-2.5 font-mono">{i}</td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </table>
-        </div>
+  <section class="mx-auto max-w-page px-4 py-24 sm:px-8" aria-labelledby="sample">
+    <SectionHeading eyebrow="Sample output" title="Scores you can defend, fixes you can verify" id="sample">
+      <code class="font-mono text-[17px]">/astro audit</code> writes an
+      <code class="font-mono text-[17px]">ASTRO-AUDIT.md</code> with an overall score, a score per category and a priority
+      matrix. Every finding names its file and line, and says how you would know the fix failed.
+    </SectionHeading>
+    <div class="mt-14 rounded-card border border-line bg-card p-6 sm:p-10">
+      <div class="flex flex-wrap items-baseline justify-between gap-2 border-b border-ink pb-4 font-sans">
+        <p class="text-caption font-semibold tracking-[0.14em] uppercase">ASTRO-AUDIT.md</p>
+        <p class="text-caption text-ink-muted">astro ^5.14 · static · 38 pages</p>
+      </div>
+      <div class="grid grid-cols-3 border-b border-line font-sans sm:grid-cols-6">
+        {
+          [
+            ['Overall', 72],
+            ['Architecture', 86],
+            ['Performance', 61],
+            ['SEO', 70],
+            ['Accessibility', 78],
+            ['Security', 94],
+          ].map(([label, value], i) => (
+            <div class:list={['py-6', i % 3 !== 0 && 'border-l border-line pl-4', i === 3 && 'sm:border-l sm:pl-4']}>
+              <p class:list={['text-4xl tabular-nums', i === 0 ? 'font-bold' : 'font-normal']}>{value}</p>
+              <p class="mt-1 truncate text-caption text-ink-muted">{label}</p>
+            </div>
+          ))
+        }
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full min-w-[560px] text-left font-sans text-body-sm">
+          <thead class="text-caption text-ink-muted">
+            <tr class="border-b border-line">
+              <th class="py-3 pr-4 font-normal">Priority</th>
+              <th class="py-3 pr-4 font-normal">Finding</th>
+              <th class="py-3 pr-4 font-normal">Effort</th>
+              <th class="py-3 font-normal">Impact</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              [
+                ['Critical', 'Hero image lazy-loaded (LCP 4.1s)', 'S', 'L'],
+                ['High', '3 islands use client:load below the fold', 'S', 'M'],
+                ['High', 'No canonical or hreflang on /es/ routes', 'M', 'L'],
+                ['Quick win', 'Add robots.txt endpoint with sitemap', 'S', 'S'],
+              ].map(([p, f, e, i]) => (
+                <tr class="border-b border-line last:border-0">
+                  <td class:list={['py-3.5 pr-4', p === 'Critical' && 'font-semibold']}>{p}</td>
+                  <td class="py-3.5 pr-4 font-serif">{f}</td>
+                  <td class="py-3.5 pr-4 tabular-nums">{e}</td>
+                  <td class="py-3.5 tabular-nums">{i}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
 
   <!-- Comparison -->
-  <section class="mx-auto max-w-6xl px-4 py-24 sm:px-6" aria-labelledby="compare">
-    <SectionHeading eyebrow="Why skills" title="Generic assistant vs. Astro skills" id="compare">
-      A general coding assistant knows a lot of Astro from a lot of versions. Skills make it know yours.
-    </SectionHeading>
-    <div class="mt-12 overflow-x-auto rounded-xl border border-[var(--color-border)]">
-      <table class="w-full min-w-[640px] text-left text-sm">
-        <thead class="bg-[var(--color-surface)]">
-          <tr class="border-b border-[var(--color-border)]">
-            <th scope="col" class="px-5 py-3 font-medium text-[var(--color-fg-muted)]"></th>
-            <th scope="col" class="px-5 py-3 font-medium text-[var(--color-fg-muted)]">Without skills</th>
-            <th scope="col" class="px-5 py-3 font-medium">With astro-skills</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            comparison.map(([topic, before, after]) => (
-              <tr class="border-b border-[var(--color-border)] last:border-0">
-                <th scope="row" class="px-5 py-3.5 font-medium">
-                  {topic}
-                </th>
-                <td class="px-5 py-3.5 text-[var(--color-fg-muted)]">{before}</td>
-                <td class="px-5 py-3.5">
-                  <span class="mr-2 text-[var(--color-success)]">✓</span>
-                  {after}
-                </td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
+  <section class="border-t border-line" aria-labelledby="compare">
+    <div class="mx-auto max-w-page px-4 py-24 sm:px-8">
+      <SectionHeading eyebrow="Why skills" title="A generalist, or a specialist who read your code" id="compare">
+        A general coding assistant knows Astro across many versions. These skills make it check the version and code you
+        actually have.
+      </SectionHeading>
+      <div class="mt-14 overflow-x-auto">
+        <table class="w-full min-w-[680px] text-left">
+          <thead class="font-sans text-caption">
+            <tr class="border-b border-ink">
+              <th scope="col" class="py-3 pr-6 font-normal text-ink-muted">Topic</th>
+              <th scope="col" class="py-3 pr-6 font-normal text-ink-muted">Without skills</th>
+              <th scope="col" class="py-3 font-semibold">With Astro Skills</th>
+            </tr>
+          </thead>
+          <tbody class="text-body-sm">
+            {
+              comparison.map(([topic, before, after]) => (
+                <tr class="border-b border-line">
+                  <th scope="row" class="py-4 pr-6 font-sans font-semibold">
+                    {topic}
+                  </th>
+                  <td class="py-4 pr-6 text-ink-muted">{before}</td>
+                  <td class="py-4">{after}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 
   <!-- Install -->
-  <section class="border-y border-[var(--color-border)] bg-[var(--color-surface)]" aria-labelledby="install">
-    <div class="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+  <section class="border-t border-line bg-card" aria-labelledby="install">
+    <div class="mx-auto max-w-page px-4 py-24 sm:px-8">
       <SectionHeading eyebrow="Install" title="Ready in under a minute" id="install">
-        Requires Claude Code and Node 18+ for the scanner. Nothing is added to your Astro project.
+        You need Claude Code, plus Node 18 or newer for the scanner. Nothing is added to your Astro project.
       </SectionHeading>
-      <div class="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-2 [&>*]:min-w-0">
+      <div class="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-2 [&>*]:min-w-0">
         <div>
-          <h3 class="mb-3 font-semibold">Plugin marketplace <span class="text-sm font-normal text-[var(--color-fg-muted)]">(recommended)</span></h3>
+          <h3 class="mb-3 font-sans text-body-sm font-semibold">
+            Plugin marketplace <span class="font-normal text-ink-muted">· recommended</span>
+          </h3>
           <CopyCommand lines={PLUGIN_INSTALL} label="Claude Code" />
         </div>
         <div>
-          <h3 class="mb-3 font-semibold">Manual install <span class="text-sm font-normal text-[var(--color-fg-muted)]">(macOS, Linux)</span></h3>
+          <h3 class="mb-3 font-sans text-body-sm font-semibold">
+            Manual install <span class="font-normal text-ink-muted">· macOS, Linux</span>
+          </h3>
           <CopyCommand lines={MANUAL_INSTALL} label="bash" />
         </div>
-      </div>
-      <div class="mt-6">
-        <h3 class="mb-3 font-semibold">Then, inside any Astro project</h3>
-        <CopyCommand lines={['claude', '/astro audit']} label="Your project" />
+        <div class="lg:col-span-2">
+          <h3 class="mb-3 font-sans text-body-sm font-semibold">Then, inside any Astro project</h3>
+          <CopyCommand lines={['claude', '/astro audit']} label="Your project" />
+        </div>
       </div>
     </div>
   </section>
 
   <!-- FAQ -->
-  <section class="mx-auto max-w-3xl px-4 py-24 sm:px-6" aria-labelledby="faq">
-    <SectionHeading eyebrow="FAQ" title="Questions, answered" id="faq" />
-    <div class="mt-10 divide-y divide-[var(--color-border)] border-y border-[var(--color-border)]">
-      {
-        faqs.map((f) => (
-          <details name="faq" class="group py-5">
-            <summary class="flex cursor-pointer list-none items-center justify-between gap-6 font-medium [&::-webkit-details-marker]:hidden">
-              {f.q}
-              <span
-                aria-hidden="true"
-                class="font-mono text-[var(--color-fg-muted)] transition-transform group-open:rotate-45"
-              >
-                +
-              </span>
-            </summary>
-            <p class="mt-3 leading-7 text-[var(--color-fg-muted)]">{f.a}</p>
-          </details>
-        ))
-      }
+  <section class="border-t border-line" aria-labelledby="faq">
+    <div class="mx-auto grid max-w-page gap-10 px-4 py-24 sm:px-8 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
+      <div>
+        <p class="font-sans text-caption font-semibold tracking-[0.14em] uppercase">FAQ</p>
+        <h2 id="faq" class="mt-4 font-sans text-4xl font-bold tracking-tight sm:text-5xl">Questions, answered</h2>
+      </div>
+      <div class="border-t border-ink">
+        {
+          faqs.map((f) => (
+            <details name="faq" class="group border-b border-line">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 font-sans text-body-sm font-semibold [&::-webkit-details-marker]:hidden">
+                {f.q}
+                <span aria-hidden="true" class="text-subheading font-normal transition-transform group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+              <p class="pb-6 text-body-sm leading-relaxed">{f.a}</p>
+            </details>
+          ))
+        }
+      </div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="mx-auto max-w-6xl px-4 pb-24 sm:px-6">
-    <div
-      class="relative overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] px-6 py-14 text-center"
-    >
-      <div
-        aria-hidden="true"
-        class="pointer-events-none absolute inset-x-0 -bottom-32 mx-auto h-64 max-w-2xl rounded-full bg-[radial-gradient(closest-side,color-mix(in_oklab,var(--color-accent)_25%,transparent),transparent)] blur-2xl"
-      >
-      </div>
-      <h2 class="relative text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
-        Build Astro sites like you have a specialist on call
-      </h2>
-      <p class="relative mx-auto mt-4 max-w-xl text-[var(--color-fg-muted)]">
-        Open source, MIT licensed, and made of plain Markdown you can read, fork and extend.
-      </p>
-      <div class="relative mt-8 flex flex-wrap justify-center gap-3">
-        <a
-          href="#install"
-          class="inline-flex h-11 items-center rounded-lg bg-[var(--color-primary)] px-5 text-sm font-medium text-[var(--color-primary-fg)] transition-opacity hover:opacity-90"
-          >Install now</a
-        >
-        <a
-          href={GITHUB_URL}
-          class="inline-flex h-11 items-center rounded-lg border border-[var(--color-border-strong)] px-5 text-sm font-medium transition-colors hover:bg-[var(--color-surface-2)]"
-          >Star on GitHub</a
-        >
+  <!-- Closing -->
+  <section class="mx-auto max-w-page px-4 pb-24 sm:px-8">
+    <div class="rounded-card bg-panel px-6 py-16 sm:px-16">
+      <div class="grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-end">
+        <h2 class="text-4xl leading-tight text-balance sm:text-display">
+          Build Astro sites as if a specialist were reviewing every change.
+        </h2>
+        <div>
+          <p class="text-body-sm leading-relaxed">
+            Open source, MIT licensed, and written in plain Markdown you can read, fork and extend.
+          </p>
+          <div class="mt-6 flex flex-wrap gap-x-6 gap-y-3 font-sans">
+            <a href={url('/skills')} class="rounded-b-lg bg-card px-8 py-3 text-body-sm font-medium transition-colors hover:bg-ivory-medium"
+              >Read the skills</a
+            >
+            <a href={GITHUB_URL} class="self-center text-body-sm underline decoration-1 underline-offset-4 hover:decoration-2"
+              >Star on GitHub →</a
+            >
+          </div>
+        </div>
       </div>
     </div>
   </section>

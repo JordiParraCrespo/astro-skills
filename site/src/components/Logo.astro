@@ -6,13 +6,7 @@ const { class: className } = Astro.props;
 ---
 
 <svg class={className} viewBox="0 0 32 32" fill="none" aria-hidden="true">
-  <defs>
-    <linearGradient id="logo-g" x1="4" y1="28" x2="28" y2="4" gradientUnits="userSpaceOnUse">
-      <stop stop-color="var(--color-accent)"></stop>
-      <stop offset="1" stop-color="var(--color-accent-2)"></stop>
-    </linearGradient>
-  </defs>
-  <rect x="1" y="1" width="30" height="30" rx="8" stroke="url(#logo-g)" stroke-width="2"></rect>
-  <path d="M10 22 16 8l6 14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path>
-  <path d="M12.5 18h7" stroke="url(#logo-g)" stroke-width="2.4" stroke-linecap="round"></path>
+  <path d="M8 26 16 6l8 20" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"></path>
+  <path d="M11.5 18.5h9" stroke="currentColor" stroke-width="2.5"></path>
+  <circle cx="16" cy="6" r="2.5" fill="currentColor"></circle>
 </svg>

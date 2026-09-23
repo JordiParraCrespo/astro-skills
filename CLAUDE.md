@@ -24,3 +24,7 @@ npm run scan -- <path> # run the scanner
 - Skills stay generic: no project- or company-specific references.
 - Never recommend removed Astro APIs (`Astro.glob`, `output: 'hybrid'`, `<ViewTransitions />`, legacy `src/content/config.ts`).
 - Bump `version` in `package.json` and `.claude-plugin/plugin.json` together.
+
+## Site design
+
+Warm-parchment editorial system, light only (tokens in `site/src/styles/global.css`). Use role tokens (`bg-canvas`, `bg-card`, `bg-feature`, `bg-panel`, `text-ink`, `border-line`), never raw hex. Serif for body copy, sans for UI chrome and headings. No shadows, gradients or glows: surfaces get their depth from tone and 1px borders only. The clay `bg-action` button appears at most once per page, with dark text (light text on clay fails WCAG AA). Filled secondary buttons round only their bottom corners (`rounded-b-lg`). Inline links always show their underline.

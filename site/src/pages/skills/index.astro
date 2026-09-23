@@ -13,41 +13,38 @@ const agents = (await getCollection('agents')).sort((a, b) => a.data.name.locale
   title="All skills"
   description={`All ${skills.length} Astro skills and ${agents.length} audit agents for Claude Code, grouped by category.`}
 >
-  <section class="mx-auto max-w-6xl px-4 pt-16 pb-24 sm:px-6">
-    <p class="font-mono text-xs tracking-[0.2em] text-[var(--color-accent-fg)] uppercase">Catalog</p>
-    <h1 class="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
-      {skills.length} skills. {agents.length} agents.
-    </h1>
-    <p class="mt-4 max-w-2xl text-lg text-[var(--color-fg-muted)]">
-      Every skill is a SKILL.md file you can read in full below. Invoke it with its command, or just describe the
-      problem and let Claude pick.
-    </p>
-    <nav class="mt-8 flex flex-wrap gap-2" aria-label="Categories">
+  <section class="mx-auto max-w-page px-4 pt-20 pb-24 sm:px-8">
+    <div class="grid gap-8 lg:grid-cols-[1.25fr_1fr] lg:gap-20">
+      <div>
+        <p class="font-sans text-caption font-semibold tracking-[0.14em] uppercase">The catalog</p>
+        <h1 class="mt-4 font-sans text-5xl leading-[1.05] font-bold tracking-tight sm:text-heading">
+          {skills.length} skills. {agents.length} agents.
+        </h1>
+      </div>
+      <p class="text-body text-pretty lg:pt-10">
+        Every skill is a SKILL.md file, printed here in full. Invoke it with its command, or describe the problem and let
+        Claude choose.
+      </p>
+    </div>
+    <nav class="mt-12 flex flex-wrap gap-x-6 gap-y-2 border-y border-line py-4 font-sans text-caption" aria-label="Categories">
       {
         CATEGORIES.map((c) => (
-          <a
-            href={`#${c}`}
-            class="rounded-full border border-[var(--color-border)] px-3 py-1 font-mono text-xs transition-colors hover:bg-[var(--color-surface-2)]"
-          >
+          <a href={`#${c}`} class="underline decoration-1 underline-offset-4 hover:decoration-2">
             {CATEGORY_LABELS[c]?.label}
           </a>
         ))
       }
-      <a
-        href="#agents"
-        class="rounded-full border border-[var(--color-border)] px-3 py-1 font-mono text-xs transition-colors hover:bg-[var(--color-surface-2)]"
-        >Agents</a
-      >
+      <a href="#agents" class="underline decoration-1 underline-offset-4 hover:decoration-2">Agents</a>
     </nav>
 
     {
       CATEGORIES.map((cat) => (
         <section class="mt-16" aria-labelledby={cat}>
-          <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b border-[var(--color-border)] pb-3">
-            <h2 id={cat} class="font-mono text-sm tracking-widest uppercase">
+          <div class="flex flex-wrap items-baseline gap-x-5 gap-y-1 border-b border-ink pb-3">
+            <h2 id={cat} class="font-sans text-caption font-semibold tracking-[0.14em] uppercase">
               {CATEGORY_LABELS[cat]?.label}
             </h2>
-            <p class="text-sm text-[var(--color-fg-muted)]">{CATEGORY_LABELS[cat]?.blurb}</p>
+            <p class="text-body-sm text-ink-muted">{CATEGORY_LABELS[cat]?.blurb}</p>
           </div>
           <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {skills
@@ -60,21 +57,21 @@ const agents = (await getCollection('agents')).sort((a, b) => a.data.name.locale
       ))
     }
 
-    <section class="mt-20" aria-labelledby="agents">
-      <div class="border-b border-[var(--color-border)] pb-3">
-        <h2 id="agents" class="font-mono text-sm tracking-widest uppercase">Audit agents</h2>
-      </div>
-      <p class="mt-4 max-w-2xl text-sm text-[var(--color-fg-muted)]">
-        Read-only subagents that <a class="underline" href={url('/skills/astro-audit')}>astro-audit</a> runs in parallel.
+    <section class="mt-20 rounded-card bg-panel p-6 sm:p-12" aria-labelledby="agents">
+      <p class="font-sans text-caption font-semibold tracking-[0.14em] uppercase">Audit agents</p>
+      <h2 id="agents" class="mt-4 font-sans text-3xl font-bold tracking-tight">Five reviewers, run in parallel</h2>
+      <p class="mt-4 max-w-2xl text-body-sm leading-relaxed">
+        These read-only subagents are what
+        <a class="underline decoration-1 underline-offset-4" href={url('/skills/astro-audit')}>astro-audit</a> sends out.
         Each one applies the checklists of its sub-skills and returns scored findings.
       </p>
-      <ul class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {
           agents.map((a) => (
-            <li class="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
-              <p class="font-mono text-sm font-semibold">{a.data.name}</p>
-              <p class="mt-2 text-sm leading-6 text-[var(--color-fg-muted)]">{a.data.description}</p>
-              {a.data.tools && <p class="mt-4 font-mono text-xs text-[var(--color-fg-muted)]">tools: {a.data.tools}</p>}
+            <li class="rounded-card bg-card p-7">
+              <p class="font-sans text-body-sm font-semibold">{a.data.name}</p>
+              <p class="mt-3 text-body-sm leading-relaxed text-ink-muted">{a.data.description}</p>
+              {a.data.tools && <p class="mt-5 border-t border-line pt-3 font-mono text-[12px] text-ink-muted">tools: {a.data.tools}</p>}
             </li>
           ))
         }

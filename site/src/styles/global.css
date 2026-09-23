@@ -1,79 +1,86 @@
 @import 'tailwindcss';
 
+/* =============================================================================
+ * Warm-parchment editorial system. Light only.
+ * Elevation comes from surface tone (canvas → card → feature) and 1px hairlines,
+ * never shadows or gradients. Clay is reserved for the one decisive CTA per page.
+ * ============================================================================= */
+
 @theme {
-  --color-zinc-50: #fafafa;
-  --color-zinc-100: #f4f4f5;
-  --color-zinc-200: #e4e4e7;
-  --color-zinc-300: #d4d4d8;
-  --color-zinc-400: #a1a1aa;
-  --color-zinc-500: #71717a;
-  --color-zinc-600: #52525b;
-  --color-zinc-700: #3f3f46;
-  --color-zinc-800: #27272a;
-  --color-zinc-900: #18181b;
-  --color-zinc-950: #09090b;
+  /* Palette — source values */
+  --color-slate-dark: #141413;
+  --color-slate-medium: #3d3d3a;
+  --color-ivory-medium: #f0eee6;
+  --color-ivory-light: #faf9f5;
+  --color-cloud-medium: #b0aea5;
+  --color-cloud-dark: #87867f;
+  --color-stone: #cccbc8;
+  --color-oat-warm: #e3dacc;
+  --color-manilla: #f5e3c7;
+  --color-clay: #d97757;
+  --color-clay-deep: #c6613f;
 
-  --color-bg: var(--color-zinc-950);
-  --color-surface: #0f0f12;
-  --color-surface-2: var(--color-zinc-900);
-  --color-fg: var(--color-zinc-50);
-  --color-fg-muted: var(--color-zinc-400);
-  --color-border: var(--color-zinc-800);
-  --color-border-strong: var(--color-zinc-700);
-  --color-primary: var(--color-zinc-50);
-  --color-primary-fg: var(--color-zinc-950);
-  --color-ring: var(--color-zinc-300);
+  /* Roles — components use these, never the palette directly */
+  --color-canvas: var(--color-ivory-medium);
+  --color-card: var(--color-ivory-light);
+  --color-feature: var(--color-manilla);
+  --color-panel: var(--color-oat-warm);
+  --color-invert: var(--color-slate-dark);
+  --color-ink: var(--color-slate-dark);
+  /* Body-size secondary text. cloud-medium fails AA on canvas, so muted copy steps up to slate-medium. */
+  --color-ink-muted: var(--color-slate-medium);
+  --color-ink-subtle: var(--color-cloud-dark);
+  --color-ink-on-invert: var(--color-ivory-light);
+  --color-ink-on-invert-muted: var(--color-cloud-medium);
+  --color-line: var(--color-stone);
+  --color-line-strong: var(--color-cloud-dark);
+  --color-line-invert: var(--color-slate-medium);
+  --color-action: var(--color-clay);
+  --color-action-hover: var(--color-clay-deep);
 
-  /* The single accent: Astro's launch-orange to purple. Decoration only. */
-  --color-accent: #ff5d01;
-  --color-accent-2: #a855f7;
-  --color-accent-fg: #ffb088;
+  /* Families — system substitutes, zero font downloads */
+  --font-serif: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, Georgia, ui-serif, serif;
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
-  --color-success: oklch(76% 0.15 150);
-  --color-warning: oklch(80% 0.15 80);
-  --color-danger: oklch(70% 0.19 28);
+  /* Type scale */
+  --text-caption: 12px;
+  --text-caption--line-height: 1.4;
+  --text-caption--letter-spacing: -0.24px;
+  --text-body-sm: 16px;
+  --text-body-sm--line-height: 1.4;
+  --text-body-sm--letter-spacing: -0.08px;
+  --text-body: 20px;
+  --text-body--line-height: 1.4;
+  --text-subheading: 24px;
+  --text-subheading--line-height: 1.3;
+  --text-subheading--letter-spacing: -0.05px;
+  --text-heading: 61px;
+  --text-heading--line-height: 1.1;
+  --text-heading--letter-spacing: -0.12px;
+  --text-display: 68px;
+  --text-display--line-height: 1.1;
 
-  --color-term-bg: #0b0b0e;
-  --color-term-fg: var(--color-zinc-200);
-  --color-term-muted: var(--color-zinc-500);
-
-  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, Consolas, monospace;
+  --radius-card: 24px;
+  --container-page: 1280px;
 }
 
 @layer base {
-  :root.light {
-    --color-bg: #ffffff;
-    --color-surface: var(--color-zinc-50);
-    --color-surface-2: var(--color-zinc-100);
-    --color-fg: var(--color-zinc-950);
-    --color-fg-muted: var(--color-zinc-600);
-    --color-border: var(--color-zinc-200);
-    --color-border-strong: var(--color-zinc-300);
-    --color-primary: var(--color-zinc-950);
-    --color-primary-fg: var(--color-zinc-50);
-    --color-ring: var(--color-zinc-600);
-    --color-accent-fg: #c2410c;
-  }
-
   html {
-    color-scheme: dark;
-    background: var(--color-bg);
-    color: var(--color-fg);
-    font-family: var(--font-sans);
+    color-scheme: light;
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-serif);
     -webkit-font-smoothing: antialiased;
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
   }
-  html.light {
-    color-scheme: light;
-  }
   ::selection {
-    background: color-mix(in oklab, var(--color-accent) 40%, transparent);
+    background: var(--color-oat-warm);
   }
   :focus-visible {
-    outline: 2px solid var(--color-ring);
-    outline-offset: 2px;
+    outline: 2px solid var(--color-ink);
+    outline-offset: 3px;
   }
   @media (prefers-reduced-motion: reduce) {
     html {
@@ -82,7 +89,6 @@
     *,
     *::before,
     *::after {
-      animation-duration: 0.01ms !important;
       transition-duration: 0.01ms !important;
     }
   }
@@ -90,37 +96,39 @@
 
 /* tailwind-exception: rendered SKILL.md markdown has no classes to hang utilities on. */
 .prose {
-  color: var(--color-fg-muted);
-  line-height: 1.75;
-  font-size: 1rem;
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--color-ink);
 }
 .prose > * + * {
-  margin-top: 1.1em;
+  margin-top: 1em;
 }
 .prose h1 {
   display: none;
 }
 .prose h2 {
-  color: var(--color-fg);
-  font-size: 1.5rem;
-  font-weight: 650;
-  letter-spacing: -0.02em;
-  margin-top: 2.5em;
+  font-family: var(--font-sans);
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin-top: 2.25em;
   padding-top: 1.25em;
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid var(--color-line);
 }
 .prose h3 {
-  color: var(--color-fg);
-  font-size: 1.15rem;
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
   font-weight: 600;
-  margin-top: 2em;
+  margin-top: 1.75em;
 }
 .prose strong {
-  color: var(--color-fg);
+  font-weight: 600;
 }
 .prose a {
-  color: var(--color-accent-fg);
   text-decoration: underline;
+  text-decoration-thickness: 1px;
   text-underline-offset: 3px;
 }
 .prose ul,
@@ -137,7 +145,7 @@
   margin-top: 0.35em;
 }
 .prose li::marker {
-  color: var(--color-zinc-500);
+  color: var(--color-ink-subtle);
 }
 .prose ul.contains-task-list {
   list-style: none;
@@ -145,15 +153,13 @@
 }
 .prose input[type='checkbox'] {
   margin-right: 0.5em;
-  accent-color: var(--color-accent);
+  accent-color: var(--color-ink);
 }
 .prose :not(pre) > code {
   font-family: var(--font-mono);
-  font-size: 0.875em;
-  color: var(--color-fg);
-  background: var(--color-surface-2);
-  border: 1px solid var(--color-border);
-  border-radius: 4px;
+  font-size: 0.8em;
+  background: var(--color-card);
+  border: 1px solid var(--color-line);
   padding: 0.1em 0.35em;
   overflow-wrap: anywhere;
 }
@@ -161,31 +167,33 @@
   font-family: var(--font-mono);
   font-size: 0.85rem;
   line-height: 1.6;
-  border: 1px solid var(--color-border);
-  border-radius: 10px;
-  padding: 1rem 1.25rem;
+  background: var(--color-card) !important;
+  border: 1px solid var(--color-line);
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
   overflow-x: auto;
 }
 .prose blockquote {
-  border-left: 3px solid var(--color-accent);
-  padding-left: 1rem;
-  color: var(--color-fg-muted);
+  border-left: 1px solid var(--color-ink);
+  padding-left: 1.25rem;
+  font-style: italic;
+  color: var(--color-ink-muted);
 }
 .prose table {
   display: block;
   width: 100%;
   overflow-x: auto;
   border-collapse: collapse;
-  font-size: 0.9rem;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
 }
 .prose th,
 .prose td {
-  border-bottom: 1px solid var(--color-border);
-  padding: 0.6em 0.9em 0.6em 0;
+  border-bottom: 1px solid var(--color-line);
+  padding: 0.65em 1em 0.65em 0;
   text-align: left;
   vertical-align: top;
 }
 .prose th {
-  color: var(--color-fg);
   font-weight: 600;
 }

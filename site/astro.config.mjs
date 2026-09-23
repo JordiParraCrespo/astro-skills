@@ -13,7 +13,7 @@ export default defineConfig({
   integrations: [sitemap()],
   build: { inlineStylesheets: 'always' },
   prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
-  markdown: { shikiConfig: { theme: 'github-dark-default' } },
+  markdown: { shikiConfig: { theme: 'github-light' } },
   vite: {
     plugins: [tailwindcss()],
     server: { fs: { allow: ['..'] } },

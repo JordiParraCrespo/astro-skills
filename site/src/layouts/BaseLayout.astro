@@ -28,7 +28,7 @@ const ogImage = new URL(url('/og.png'), Astro.site);
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
     <link rel="sitemap" href={url('/sitemap-index.xml')} />
-    <meta name="theme-color" content="#09090b" />
+    <meta name="theme-color" content="#f0eee6" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE_NAME} />
     <meta property="og:title" content={fullTitle} />
@@ -37,16 +37,11 @@ const ogImage = new URL(url('/og.png'), Astro.site);
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
-    <script is:inline>
-      try {
-        if (localStorage.getItem('theme') === 'light') document.documentElement.classList.add('light');
-      } catch {}
-    </script>
   </head>
-  <body class="min-h-dvh bg-[var(--color-bg)] text-[var(--color-fg)]">
+  <body class="min-h-dvh bg-canvas text-ink">
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-md focus:bg-[var(--color-primary)] focus:px-3 focus:py-2 focus:text-[var(--color-primary-fg)]"
+      class="sr-only font-sans text-body-sm focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-card focus:px-4 focus:py-2"
       >Skip to content</a
     >
     <Header />
