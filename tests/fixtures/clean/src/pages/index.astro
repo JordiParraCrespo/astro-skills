@@ -1,0 +1,11 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import hero from '../hero.png';
+const jsonLd = { '@type': 'WebSite' };
+---
+<Base>
+  <!-- <img src="/commented.png"> -->
+  <Image src={hero} alt="Hero" />
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+</Base>

@@ -1,0 +1,13 @@
+{
+  "name": "astro-skills",
+  "version": "0.1.0",
+  "description": "Expert Astro engineering for Claude Code: 17 skills and 5 audit agents covering project audits, scaffolding, components, islands, content collections, routing, i18n, SEO, images, performance, styling, Actions, view transitions, accessibility, deployment and upgrades. Includes a zero-dependency project scanner.",
+  "author": {
+    "name": "Jordi Parra Crespo",
+    "url": "https://github.com/JordiParraCrespo"
+  },
+  "license": "MIT",
+  "homepage": "https://jordiparracrespo.github.io/astro-skills",
+  "repository": "https://github.com/JordiParraCrespo/astro-skills",
+  "keywords": ["astro", "astro-build", "islands", "content-collections", "i18n", "seo", "core-web-vitals", "accessibility", "view-transitions", "astro-actions", "static-site", "performance", "audit"]
+}

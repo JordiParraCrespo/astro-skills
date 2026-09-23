@@ -1,0 +1,16 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+import Counter from '../components/Counter.jsx';
+const posts = await Astro.glob('../posts/*.md');
+const key = process.env.SECRET;
+const html = posts[0]?.body;
+---
+<html><head><ViewTransitions /></head><body>
+  <img src="/hero.png">
+  <a href="/about">About</a>
+  <a href="/rss.xml">RSS</a>
+  <Counter client:load />
+  <Counter client:visible />
+  <div onclick="go()" tabindex="2">x</div>
+  <div set:html={html} />
+</body></html>

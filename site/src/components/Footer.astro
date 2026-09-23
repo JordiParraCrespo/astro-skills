@@ -1,0 +1,65 @@
+---
+import Logo from './Logo.astro';
+import { GITHUB_URL, url } from '../lib/site';
+
+const columns = [
+  {
+    title: 'Product',
+    links: [
+      { href: url('/skills'), label: 'All skills' },
+      { href: url('/#how-it-works'), label: 'How it works' },
+      { href: url('/#install'), label: 'Install' },
+    ],
+  },
+  {
+    title: 'Resources',
+    links: [
+      { href: GITHUB_URL, label: 'GitHub' },
+      { href: `${GITHUB_URL}/blob/main/CHANGELOG.md`, label: 'Changelog' },
+      { href: url('/llms.txt'), label: 'llms.txt' },
+    ],
+  },
+  {
+    title: 'Astro',
+    links: [
+      { href: 'https://docs.astro.build', label: 'Astro docs' },
+      { href: 'https://docs.claude.com/en/docs/claude-code/skills', label: 'Claude Code skills' },
+    ],
+  },
+];
+---
+
+<footer class="bg-invert font-mono text-ink-on-invert">
+  <div class="mx-auto grid max-w-page gap-12 px-4 py-20 sm:px-8 md:grid-cols-[2fr_repeat(3,1fr)]">
+    <div>
+      <a href={url('/')} class="flex items-center gap-2 font-sans text-[15px] font-bold tracking-[-0.01em]">
+        <Logo class="size-5" />
+        Astro Skills
+      </a>
+      <p class="mt-5 max-w-xs font-mono text-body-sm leading-relaxed text-ink-on-invert-muted">
+        Open-source Claude Code skills for fast, accessible, well-ranked Astro sites. MIT licensed.
+      </p>
+    </div>
+    {
+      columns.map((c) => (
+        <div>
+          <h2 class="text-caption font-bold tracking-[0.18em] uppercase">{c.title}</h2>
+          <ul class="mt-4 space-y-2 text-caption">
+            {c.links.map((l) => (
+              <li>
+                <a href={l.href} class="text-ink-on-invert-muted transition-colors hover:text-ink-on-invert">
+                  {l.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+  <div class="border-t border-line-invert">
+    <p class="mx-auto max-w-page px-4 py-6 text-caption text-ink-on-invert-muted sm:px-8">
+      Not affiliated with Astro Technology Company or Anthropic. Built with Astro.
+    </p>
+  </div>
+</footer>

@@ -1,0 +1,206 @@
+@import '@fontsource-variable/space-grotesk/wght.css';
+@import '@fontsource/ibm-plex-mono/latin-400.css';
+@import '@fontsource/ibm-plex-mono/latin-500.css';
+@import '@fontsource/ibm-plex-mono/latin-700.css';
+@import 'tailwindcss';
+
+/* =============================================================================
+ * Warm-parchment editorial system. Light only.
+ * Elevation comes from surface tone (canvas → card → feature) and 1px hairlines,
+ * never shadows or gradients. Clay is reserved for the one decisive CTA per page.
+ * ============================================================================= */
+
+@theme {
+  /* Palette — source values */
+  --color-slate-dark: #141413;
+  --color-slate-medium: #3d3d3a;
+  --color-ivory-medium: #f0eee6;
+  --color-ivory-light: #faf9f5;
+  --color-cloud-medium: #b0aea5;
+  --color-cloud-dark: #87867f;
+  --color-stone: #cccbc8;
+  --color-oat-warm: #e3dacc;
+  --color-manilla: #f5e3c7;
+  --color-clay: #d97757;
+  --color-clay-deep: #c6613f;
+
+  /* Roles — components use these, never the palette directly */
+  --color-canvas: var(--color-ivory-medium);
+  --color-card: var(--color-ivory-light);
+  --color-feature: var(--color-manilla);
+  --color-panel: var(--color-oat-warm);
+  --color-invert: var(--color-slate-dark);
+  --color-ink: var(--color-slate-dark);
+  /* Body-size secondary text. cloud-medium fails AA on canvas, so muted copy steps up to slate-medium. */
+  --color-ink-muted: var(--color-slate-medium);
+  --color-ink-subtle: var(--color-cloud-dark);
+  --color-ink-on-invert: var(--color-ivory-light);
+  --color-ink-on-invert-muted: var(--color-cloud-medium);
+  --color-line: var(--color-stone);
+  --color-line-strong: var(--color-cloud-dark);
+  --color-line-invert: var(--color-slate-medium);
+  --color-action: var(--color-clay);
+  --color-action-hover: var(--color-clay-deep);
+
+  /* Families — self-hosted via Fontsource. Grotesk for display and titles, mono for everything else. */
+  --font-sans: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Type scale */
+  --text-caption: 11px;
+  --text-caption--line-height: 1.5;
+  --text-caption--letter-spacing: 0.04em;
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 1.7;
+  --text-body: 16px;
+  --text-body--line-height: 1.7;
+  --text-subheading: 24px;
+  --text-subheading--line-height: 1.3;
+  --text-subheading--letter-spacing: -0.05px;
+  --text-heading: 61px;
+  --text-heading--line-height: 1.1;
+  --text-heading--letter-spacing: -0.12px;
+  --text-display: 68px;
+  --text-display--line-height: 1.1;
+
+  --radius-card: 24px;
+  --container-page: 1280px;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    font-kerning: normal;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  ::selection {
+    background: var(--color-oat-warm);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* tailwind-exception: rendered SKILL.md markdown has no classes to hang utilities on. */
+.prose {
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--color-ink);
+}
+.prose > * + * {
+  margin-top: 1em;
+}
+.prose h1 {
+  display: none;
+}
+.prose h2 {
+  font-family: var(--font-sans);
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-top: 2.25em;
+  padding-top: 1.25em;
+  border-top: 1px solid var(--color-line);
+}
+.prose h3 {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-top: 1.75em;
+}
+.prose strong {
+  font-weight: 600;
+}
+.prose a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.prose ul,
+.prose ol {
+  padding-left: 1.25em;
+}
+.prose ul {
+  list-style: disc;
+}
+.prose ol {
+  list-style: decimal;
+}
+.prose li + li {
+  margin-top: 0.35em;
+}
+.prose li::marker {
+  color: var(--color-ink-subtle);
+}
+.prose ul.contains-task-list {
+  list-style: none;
+  padding-left: 0;
+}
+.prose input[type='checkbox'] {
+  margin-right: 0.5em;
+  accent-color: var(--color-ink);
+}
+.prose :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  border-radius: 4px;
+  background: var(--color-card);
+  border: 1px solid var(--color-line);
+  padding: 0.1em 0.35em;
+  overflow-wrap: anywhere;
+}
+.prose pre {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  background: var(--color-card) !important;
+  border: 1px solid var(--color-line);
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  overflow-x: auto;
+}
+.prose blockquote {
+  border-left: 2px solid var(--color-ink);
+  padding-left: 1.25rem;
+  color: var(--color-ink-muted);
+}
+.prose table {
+  display: block;
+  font-variant-numeric: tabular-nums;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+.prose th,
+.prose td {
+  border-bottom: 1px solid var(--color-line);
+  padding: 0.65em 1em 0.65em 0;
+  text-align: left;
+  vertical-align: top;
+}
+.prose th {
+  font-weight: 600;
+}

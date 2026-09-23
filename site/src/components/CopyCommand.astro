@@ -1,0 +1,35 @@
+---
+interface Props {
+  lines: string[];
+  label?: string;
+}
+const { lines, label = 'Terminal' } = Astro.props;
+---
+
+<div class="overflow-hidden rounded-2xl border border-line bg-card">
+  <div class="flex items-center justify-between border-b border-line px-5 py-2.5 font-mono">
+    <span class="text-caption text-ink-muted">{label}</span>
+    <button
+      type="button"
+      data-copy={lines.join('\n')}
+      class="text-caption text-ink underline decoration-1 underline-offset-4 hover:decoration-2"
+      >Copy</button
+    >
+  </div>
+  <pre
+    class="overflow-x-auto px-5 py-4 font-mono text-[15px] leading-7"><code>{lines.map((l) => <div><span class="select-none text-ink-subtle">$ </span>{l}</div>)}</code></pre>
+</div>
+
+<script>
+  document.addEventListener('click', async (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-copy]');
+    if (!btn) return;
+    try {
+      await navigator.clipboard.writeText(btn.dataset.copy ?? '');
+      btn.textContent = 'Copied';
+      setTimeout(() => (btn.textContent = 'Copy'), 1500);
+    } catch {
+      btn.textContent = 'Select & copy';
+    }
+  });
+</script>

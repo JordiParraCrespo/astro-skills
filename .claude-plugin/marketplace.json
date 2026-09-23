@@ -1,0 +1,22 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "astro-skills",
+  "owner": {
+    "name": "Jordi Parra Crespo",
+    "url": "https://github.com/JordiParraCrespo"
+  },
+  "metadata": {
+    "description": "Claude Code skills and agents for building production-grade Astro sites."
+  },
+  "plugins": [
+    {
+      "name": "astro-skills",
+      "source": "./",
+      "description": "17 Astro skills and 5 audit agents: audits, islands, content collections, i18n, SEO, images, performance, accessibility, deployment and upgrades.",
+      "author": { "name": "Jordi Parra Crespo", "url": "https://github.com/JordiParraCrespo" },
+      "category": "development",
+      "homepage": "https://jordiparracrespo.github.io/astro-skills",
+      "keywords": ["astro", "islands", "content-collections", "seo", "performance", "accessibility"]
+    }
+  ]
+}

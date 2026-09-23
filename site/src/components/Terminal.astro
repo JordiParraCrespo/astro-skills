@@ -1,0 +1,46 @@
+---
+const agents = ['astro-architect', 'astro-performance', 'astro-seo', 'astro-accessibility', 'astro-security'];
+const scores = [
+  ['architecture', 86],
+  ['performance', 61],
+  ['seo', 70],
+  ['accessibility', 78],
+  ['security', 94],
+] as const;
+---
+
+<figure
+  class="overflow-hidden rounded-2xl border border-line bg-card"
+  aria-label="Transcript of /astro audit: the scanner detects the project, five agents run in parallel, and the project scores 72 out of 100 with a prioritized list of fixes."
+>
+  <div class="flex items-center justify-between border-b border-line px-5 py-3 font-mono text-caption text-ink-muted">
+    <span>claude — my-astro-site</span>
+    <span>transcript</span>
+  </div>
+  <div class="overflow-x-auto px-5 py-5 font-mono text-[13px] leading-6 sm:text-sm" aria-hidden="true">
+    <p class="font-semibold">&gt; /astro audit</p>
+    <p class="mt-3 text-ink-muted">Scanning project…</p>
+    <p class="whitespace-pre text-ink-muted">  astro ^5.14 · static · 38 pages · 6 islands</p>
+    <p class="text-ink-muted">Spawning 5 agents in parallel</p>
+    <ul class="mt-1 grid grid-cols-1 gap-x-6 pl-4 sm:grid-cols-2">
+      {agents.map((a) => <li>✓ {a}</li>)}
+    </ul>
+    <p class="mt-4">Score <span class="font-semibold">72</span>/100</p>
+    <ul class="mt-1 space-y-1">
+      {
+        scores.map(([name, value]) => (
+          <li class="flex items-center gap-3">
+            <span class="w-28 shrink-0 text-ink-muted">{name}</span>
+            <span class="h-1 w-28 shrink-0 bg-line">
+              <span class="block h-full bg-ink" style={`width:${value}%`} />
+            </span>
+            <span class="tabular-nums">{value}</span>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="mt-4 whitespace-pre"><span class="font-semibold">critical</span>  hero.jpg lazy-loaded → LCP 4.1s</p>
+    <p class="whitespace-pre"><span class="font-semibold">high    </span>  3× client:load below the fold</p>
+    <p class="mt-1 text-ink-muted">→ wrote ASTRO-AUDIT.md (14 findings)</p>
+  </div>
+</figure>

@@ -1,0 +1,124 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CopyCommand from '../../components/CopyCommand.astro';
+import { CATEGORY_LABELS, GITHUB_URL, summaryOf, triggersOf, url } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const skills = (await getCollection('skills')).sort((a, b) => a.data.metadata.order - b.data.metadata.order);
+  return skills.map((skill, i) => ({
+    params: { slug: skill.id },
+    props: { skill, prev: skills[i - 1], next: skills[i + 1] },
+  }));
+}
+
+interface Props {
+  skill: CollectionEntry<'skills'>;
+  prev?: CollectionEntry<'skills'>;
+  next?: CollectionEntry<'skills'>;
+}
+
+const { skill, prev, next } = Astro.props;
+const { Content, headings } = await render(skill);
+const { metadata, description } = skill.data;
+const triggers = triggersOf(description);
+const toc = headings.filter((h) => h.depth === 2);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: `${skill.data.name}: ${metadata.tagline}`,
+  description: summaryOf(description),
+  url: new URL(url(`/skills/${skill.id}`), Astro.site).href,
+  isPartOf: { '@type': 'SoftwareApplication', name: 'Astro Skills', codeRepository: GITHUB_URL },
+};
+---
+
+<BaseLayout title={skill.data.name} description={metadata.tagline} jsonLd={jsonLd}>
+  <div class="mx-auto max-w-page px-4 pt-10 pb-24 sm:px-8">
+    <nav aria-label="Breadcrumb" class="font-mono text-caption text-ink-muted">
+      <a href={url('/')} class="underline decoration-1 underline-offset-4 hover:text-ink">Home</a>
+      <span class="mx-2">/</span>
+      <a href={url('/skills')} class="underline decoration-1 underline-offset-4 hover:text-ink">Skills</a>
+      <span class="mx-2">/</span>
+      <span class="text-ink" aria-current="page">{skill.id}</span>
+    </nav>
+
+    <header class="mt-10 rounded-card bg-feature p-6 sm:p-12">
+      <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1 font-mono text-caption">
+        <span class="tabular-nums">{String(metadata.order).padStart(2, '0')}</span>
+        <a href={url(`/skills#${metadata.category}`)} class="font-semibold tracking-[0.14em] uppercase underline decoration-1 underline-offset-4">
+          {CATEGORY_LABELS[metadata.category]?.label}
+        </a>
+        <span class="text-ink-muted">v{metadata.version}</span>
+      </div>
+      <div class="mt-6 grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-end lg:gap-16 [&>*]:min-w-0">
+        <div>
+          <h1 class="font-sans font-bold tracking-[-0.045em] text-[40px] leading-[0.98] break-words sm:text-[64px]">{skill.data.name}</h1>
+          <p class="mt-5 text-body text-pretty">{metadata.tagline}</p>
+        </div>
+        <CopyCommand lines={[metadata.command]} label="Invoke in Claude Code" />
+      </div>
+    </header>
+
+    <div class="mt-14 grid gap-12 lg:grid-cols-[minmax(0,760px)_1fr] lg:gap-20">
+      <article class="prose min-w-0">
+        <Content />
+      </article>
+      <aside class="order-first lg:order-none">
+        <div class="space-y-10 font-mono lg:sticky lg:top-24">
+          {
+            toc.length > 0 && (
+              <nav aria-label="On this page" class="hidden lg:block">
+                <p class="text-caption font-semibold tracking-[0.14em] uppercase">On this page</p>
+                <ul class="mt-4 border-t border-line text-body-sm">
+                  {toc.map((h) => (
+                    <li class="border-b border-line">
+                      <a href={`#${h.slug}`} class="block py-2.5 text-ink-muted hover:text-ink">
+                        {h.text}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            )
+          }
+          {
+            triggers.length > 0 && (
+              <div>
+                <p class="text-caption font-semibold tracking-[0.14em] uppercase">Triggers on</p>
+                <p class="mt-4 font-mono text-body-sm leading-relaxed text-ink-muted">{triggers.join(' · ')}</p>
+              </div>
+            )
+          }
+          <a
+            href={`${GITHUB_URL}/blob/main/skills/${skill.id}/SKILL.md`}
+            class="inline-block text-body-sm underline decoration-1 underline-offset-4 hover:decoration-2"
+            >View SKILL.md source →</a
+          >
+        </div>
+      </aside>
+    </div>
+
+    <nav class="mt-24 grid gap-4 border-t border-ink pt-8 font-mono sm:grid-cols-2" aria-label="Skill pagination">
+      {
+        prev ? (
+          <a href={url(`/skills/${prev.id}`)} class="rounded-card border border-line bg-card p-7 transition-colors hover:border-line-strong">
+            <span class="text-caption text-ink-muted">← Previous</span>
+            <span class="mt-2 block font-sans text-subheading font-bold tracking-[-0.03em]">{prev.data.name}</span>
+          </a>
+        ) : (
+          <span />
+        )
+      }
+      {
+        next && (
+          <a href={url(`/skills/${next.id}`)} class="rounded-card border border-line bg-card p-7 text-right transition-colors hover:border-line-strong">
+            <span class="text-caption text-ink-muted">Next →</span>
+            <span class="mt-2 block font-sans text-subheading font-bold tracking-[-0.03em]">{next.data.name}</span>
+          </a>
+        )
+      }
+    </nav>
+  </div>
+</BaseLayout>
